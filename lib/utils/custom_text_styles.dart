@@ -145,6 +145,15 @@ class CustomTextStyles {
     );
   }
 
+  static TextStyle f28W600({Color? color}) {
+    return TextStyle(
+      color: color,
+      fontFamily: "Roboto",
+      fontSize: 28,
+      fontWeight: FontWeight.w600,
+    );
+  }
+
   static TextStyle f32W600({Color? color}) {
     return TextStyle(
       color: color,
