@@ -33,67 +33,62 @@ class MessageScreen extends StatelessWidget {
         ),
         shadowColor: AppColors.lGrey,
       ),
+
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                CustomTextField(
-                  hint: "Search message..",
-                  preIconPath: Icons.search,
-                  textInputAction: TextInputAction.search,
-                  textInputType: TextInputType.text,
-                ),
-                SizedBox(height: 20),
-                Column(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              CustomTextField(
+                hint: "Search message..",
+                preIconPath: Icons.search,
+                textInputAction: TextInputAction.search,
+                textInputType: TextInputType.text,
+              ),
+
+              const SizedBox(height: 20),
+
+              Expanded(
+                child: ListView(
                   children: [
-                    Row(
-                      children: [
-                        MessageCard(
-                          image: ImagePath.building,
-                          companyName: "TechFlow Solution",
-                          message: "Lorem ipsum dolor sit amet consectetur.",
-                          time: "5 hour ago",
-                        ),
-                        SizedBox(height: 20),
+                    MessageCard(
+                      image: ImagePath.job,
+                      companyName: "TechFlow Solution",
+                      message: "Lorem ipsum dolor sit amet consectetur.",
+                      time: "5 hour ago",
+                    ),
 
-                        MessageCard(
-                          image: ImagePath.building,
-                          companyName: "ABC Solution",
-                          message: "Lorem ipsum dolor sit amet consectetur.",
-                          time: "1 hour ago",
-                          isRead: true,
+                    SizedBox(height: 20),
 
-                          readFontSize: 13,
-                          readFontWeight: FontWeight.bold,
-                        ),
-                        SizedBox(height: 20),
+                    MessageCard(
+                      image: ImagePath.job,
+                      companyName: "ABC Solution",
+                      message: "Lorem ipsum dolor sit amet consectetur.",
+                      time: "1 hour ago",
+                      isRead: true,
+                    ),
+                    SizedBox(height: 20),
 
-                        MessageCard(
-                          image: ImagePath.building,
-                          companyName: "ABC Solution",
-                          message: "Lorem ipsum dolor sit amet consectetur.",
-                          time: "1 hour ago",
-                          isRead: true,
+                    MessageCard(
+                      image: ImagePath.job,
+                      companyName: "ABC Solution",
+                      message: "Lorem ipsum dolor sit amet consectetur.",
+                      time: "1 hour ago",
+                      isRead: true,
+                    ),
 
-                          readFontSize: 13,
-                          readFontWeight: FontWeight.bold,
-                        ),
-                        SizedBox(height: 20),
+                    SizedBox(height: 20),
 
-                        MessageCard(
-                          image: ImagePath.building,
-                          companyName: "TechFlow Solution",
-                          message: "Lorem ipsum dolor sit amet consectetur.",
-                          time: "5 hour ago",
-                        ),
-                      ],
+                    MessageCard(
+                      image: ImagePath.job,
+                      companyName: "TechFlow Solution",
+                      message: "Lorem ipsum dolor sit amet consectetur.",
+                      time: "5 hour ago",
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

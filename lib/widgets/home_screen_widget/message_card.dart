@@ -7,9 +7,8 @@ class MessageCard extends StatelessWidget {
   final String companyName;
   final String message;
   final String time;
+
   final bool isRead;
-  final double readFontSize;
-  final FontWeight readFontWeight;
 
   MessageCard({
     super.key,
@@ -17,10 +16,8 @@ class MessageCard extends StatelessWidget {
     required this.companyName,
     required this.message,
     required this.time,
-    this.isRead = false,
 
-    this.readFontSize = 11,
-    this.readFontWeight = FontWeight.w500,
+    this.isRead = false,
   });
 
   @override
@@ -54,9 +51,11 @@ class MessageCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       companyName,
-                      style: CustomTextStyles.f16W600(
-                        color: AppColors.textColor,
-                      ),
+                      style: isRead
+                          ? CustomTextStyles.f16W400(color: AppColors.textColor)
+                          : CustomTextStyles.f16W600(
+                              color: AppColors.textColor,
+                            ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -85,9 +84,11 @@ class MessageCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       message,
-                      style: CustomTextStyles.f12W600(
-                        color: AppColors.textColor,
-                      ),
+                      style: isRead
+                          ? CustomTextStyles.f12W400(color: AppColors.textColor)
+                          : CustomTextStyles.f12W600(
+                              color: AppColors.textColor,
+                            ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
