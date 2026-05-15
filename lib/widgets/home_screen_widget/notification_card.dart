@@ -73,7 +73,7 @@ class NotificationCard extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                      Icons.alarm,
+                      Icons.access_time,
                       color: timeColor ?? AppColors.secondaryTextColor,
                       size: 18,
                     ),

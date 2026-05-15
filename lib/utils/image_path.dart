@@ -11,6 +11,7 @@ class ImagePath {
   static const String explore = "$baseIconPath/explore.svg";
   static const String rooms = "$baseIconPath/room.svg";
   static const String profile = "$baseIconPath/profile.svg";
+  static const String polygon = "$baseIconPath/polygon.svg";
 
   static const String logo = "$baseImagePath/logo.png";
   static const String job = "$baseImagePath/job.png";
