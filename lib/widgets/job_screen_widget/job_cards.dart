@@ -154,7 +154,7 @@ class JobCards extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.offAll(() => JobDetailScreen());
+                    Get.to(() => JobDetailScreen());
                   },
                   child: Container(
                     height: 25,
