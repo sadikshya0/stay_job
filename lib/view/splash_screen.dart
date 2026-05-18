@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:safe_job/controller/splash_screen_controller.dart';
@@ -25,7 +26,7 @@ class SplashScreen extends StatelessWidget {
                 style: CustomTextStyles.f16W600(color: AppColors.primaryColor),
               ),
               SizedBox(height: 230),
-              SvgPicture.asset(ImagePath.loading),
+              SpinKitChasingDots(color: AppColors.primaryColor, size: 50),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
+import 'package:safe_job/view/dashboard/job_screen.dart';
 import 'package:safe_job/view/dashboard/message_screen.dart';
 import 'package:safe_job/view/dashboard/notification_screen.dart';
 import 'package:safe_job/widgets/custom/custom_textfield.dart';
@@ -206,6 +207,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     InkWell(
+                      // onTap: () {
+                      //   Get.offAll(() => JobScreen());
+                      // },
                       child: Text(
                         "See All",
                         style: CustomTextStyles.f14W600(
