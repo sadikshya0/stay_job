@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
+import 'package:safe_job/view/dashboard/room_photo_screen.dart';
 import 'package:safe_job/view/dashboard/room_schedule_screen.dart';
 import 'package:safe_job/widgets/room_screen_widget/amenity_card.dart';
 
@@ -43,7 +44,7 @@ class RoomViewScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 30,
+                      top: 35,
                       right: 8,
                       child: Icon(
                         Icons.layers_outlined,
@@ -51,20 +52,25 @@ class RoomViewScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom: 30,
+                      bottom: 35,
                       right: 8,
-                      child: Container(
-                        height: 30,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.amber,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "View all photos",
-                            style: CustomTextStyles.f12W600(
-                              color: AppColors.textColor,
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(() => RoomPhotoScreen());
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.amber,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "View all photos",
+                              style: CustomTextStyles.f12W600(
+                                color: AppColors.textColor,
+                              ),
                             ),
                           ),
                         ),
