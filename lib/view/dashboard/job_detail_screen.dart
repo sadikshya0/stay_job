@@ -5,7 +5,6 @@ import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
 import 'package:safe_job/view/dashboard/application_screen.dart';
-import 'package:safe_job/view/dashboard/job_screen.dart';
 import 'package:safe_job/widgets/job_screen_widget/info.dart';
 
 class JobDetailScreen extends StatelessWidget {

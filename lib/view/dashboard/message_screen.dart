@@ -52,7 +52,7 @@ class MessageScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     MessageCard(
-                      image: ImagePath.job,
+                      image: ImagePath.building,
                       companyName: "TechFlow Solution",
                       message: "Lorem ipsum dolor sit amet consectetur.",
                       time: "5 hour ago",
@@ -61,7 +61,7 @@ class MessageScreen extends StatelessWidget {
                     SizedBox(height: 20),
 
                     MessageCard(
-                      image: ImagePath.job,
+                      image: ImagePath.building,
                       companyName: "ABC Solution",
                       message: "Lorem ipsum dolor sit amet consectetur.",
                       time: "1 hour ago",
@@ -70,7 +70,7 @@ class MessageScreen extends StatelessWidget {
                     SizedBox(height: 20),
 
                     MessageCard(
-                      image: ImagePath.job,
+                      image: ImagePath.building,
                       companyName: "ABC Solution",
                       message: "Lorem ipsum dolor sit amet consectetur.",
                       time: "1 hour ago",
@@ -80,7 +80,7 @@ class MessageScreen extends StatelessWidget {
                     SizedBox(height: 20),
 
                     MessageCard(
-                      image: ImagePath.job,
+                      image: ImagePath.building,
                       companyName: "TechFlow Solution",
                       message: "Lorem ipsum dolor sit amet consectetur.",
                       time: "5 hour ago",

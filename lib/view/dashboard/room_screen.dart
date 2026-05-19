@@ -13,6 +13,7 @@ class RoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         toolbarHeight: 110,
@@ -66,7 +67,7 @@ class RoomScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: RoomCard(
-                    image: ImagePath.job,
+                    image: ImagePath.flat,
                     title: room["title"],
                     price: room["price"],
                     location: room["location"],
