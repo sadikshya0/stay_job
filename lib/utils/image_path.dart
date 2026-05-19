@@ -18,4 +18,5 @@ class ImagePath {
   static const String room = "$baseImagePath/room.png";
   static const String sync = "$baseImagePath/sync.png";
   static const String building = "$baseImagePath/building.png";
+  static const String flat = "$baseImagePath/flat.png";
 }

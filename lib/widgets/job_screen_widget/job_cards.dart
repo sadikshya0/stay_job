@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/view/dashboard/job_detail_screen.dart';
-import 'package:safe_job/view/dashboard/job_screen.dart';
 
 class JobCards extends StatelessWidget {
   final String image;
