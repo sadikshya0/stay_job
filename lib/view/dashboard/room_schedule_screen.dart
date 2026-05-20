@@ -3,6 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
+import 'package:safe_job/view/dashboard/room_appointment_screen.dart';
 import 'package:safe_job/widgets/custom/custom_textfield.dart';
 import 'package:safe_job/widgets/room_screen_widget/day_date_card.dart';
 import 'package:safe_job/widgets/room_screen_widget/time_slot_card.dart';
@@ -194,18 +195,23 @@ class RoomScheduleScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 40),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Confirm Visit Schedule",
-                      style: CustomTextStyles.f16W600(
-                        color: AppColors.whiteColor,
+                InkWell(
+                  onTap: () {
+                    Get.to(() => RoomAppointmentScreen());
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Confirm Visit Schedule",
+                        style: CustomTextStyles.f16W600(
+                          color: AppColors.whiteColor,
+                        ),
                       ),
                     ),
                   ),
