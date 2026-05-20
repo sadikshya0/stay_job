@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
-import 'package:safe_job/view/dashboard/room_book_screen.dart';
+import 'package:safe_job/view/dashboard/room_schedule_screen.dart';
 import 'package:safe_job/view/dashboard/room_view_screen.dart';
 
 class RoomCard extends StatelessWidget {
@@ -11,6 +10,7 @@ class RoomCard extends StatelessWidget {
   final String title;
   final String price;
   final String location;
+  final bool isBookAvailable;
 
   final VoidCallback? onViewTap;
   final VoidCallback? onBookTap;
@@ -25,6 +25,7 @@ class RoomCard extends StatelessWidget {
     this.onViewTap,
     this.onBookTap,
     this.onBookmarkTap,
+    this.isBookAvailable = true,
   });
 
   @override
@@ -131,26 +132,24 @@ class RoomCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
               children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(() => RoomViewScreen());
-                    },
+                InkWell(
+                  onTap: () {
+                    Get.to(() => RoomViewScreen());
+                  },
 
-                    child: Container(
-                      height: 35,
+                  child: Container(
+                    height: 35,
+                    width: 130,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
 
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-
-                      child: Center(
-                        child: Text(
-                          "View",
-                          style: CustomTextStyles.f12W600(
-                            color: AppColors.whiteColor,
-                          ),
+                    child: Center(
+                      child: Text(
+                        "View",
+                        style: CustomTextStyles.f12W600(
+                          color: AppColors.whiteColor,
                         ),
                       ),
                     ),
@@ -158,16 +157,15 @@ class RoomCard extends StatelessWidget {
                 ),
 
                 const SizedBox(width: 12),
-
-                Expanded(
-                  child: InkWell(
+                if (isBookAvailable) ...[
+                  InkWell(
                     onTap: () {
-                      Get.to(() => RoomBookScreen());
+                      Get.to(() => RoomScheduleScreen());
                     },
 
                     child: Container(
                       height: 35,
-
+                      width: 130,
                       decoration: BoxDecoration(
                         color: AppColors.green.withOpacity(0.8),
 
@@ -184,7 +182,7 @@ class RoomCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ],
               ],
             ),
           ],

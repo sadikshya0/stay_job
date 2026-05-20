@@ -21,6 +21,8 @@ class CustomTextField extends StatelessWidget {
   final Function()? onTap;
   final Function(String)? onSubmitted;
   final int? maxCharacters;
+  final int? maxLines;
+
   final TextCapitalization textCapitalization;
 
   const CustomTextField({
@@ -42,6 +44,8 @@ class CustomTextField extends StatelessWidget {
     this.onSubmitted,
     this.autofocus = false,
     this.maxCharacters,
+    this.maxLines,
+
     this.focusNode,
     this.labelText,
   });

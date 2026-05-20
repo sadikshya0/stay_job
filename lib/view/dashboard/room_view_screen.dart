@@ -6,6 +6,7 @@ import 'package:safe_job/utils/image_path.dart';
 import 'package:safe_job/view/dashboard/room_photo_screen.dart';
 import 'package:safe_job/view/dashboard/room_schedule_screen.dart';
 import 'package:safe_job/widgets/room_screen_widget/amenity_card.dart';
+import 'package:safe_job/widgets/room_screen_widget/room_card.dart';
 
 class RoomViewScreen extends StatelessWidget {
   const RoomViewScreen({super.key});
@@ -17,7 +18,7 @@ class RoomViewScreen extends StatelessWidget {
 
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16),
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,42 +236,99 @@ class RoomViewScreen extends StatelessWidget {
                 SizedBox(height: 10),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    AmenityCard(icon: Icons.wifi, title: "wifi"),
-                    AmenityCard(icon: Icons.ac_unit_sharp, title: "AC"),
-                    AmenityCard(icon: Icons.kitchen, title: "Kitchen"),
+                    AmenityCard(
+                      icon: Icons.wifi,
+                      title: "wifi",
+                      isColumn: false,
+                    ),
+                    AmenityCard(
+                      icon: Icons.ac_unit_sharp,
+                      title: "AC",
+                      isColumn: false,
+                    ),
+                    AmenityCard(
+                      icon: Icons.kitchen,
+                      title: "Kitchen",
+                      isColumn: false,
+                    ),
                   ],
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 10),
 
-                InkWell(
-                  onTap: () {
-                    Get.to(() => RoomScheduleScreen());
-                  },
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: AppColors.primaryColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    AmenityCard(
+                      icon: Icons.door_front_door_outlined,
+                      title: "Rooms",
+                      description: "2",
+                      isColumn: true,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.calendar_month_outlined,
-                          color: AppColors.lGrey,
-                        ),
-                        Text(
-                          "Book visit now",
-                          style: CustomTextStyles.f16W600(
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
-                      ],
+                    AmenityCard(
+                      icon: Icons.car_rental_outlined,
+                      title: "Parking",
+                      description: "Available",
+                      isColumn: true,
                     ),
-                  ),
+                    AmenityCard(
+                      icon: Icons.bathtub_outlined,
+                      title: "bathroom",
+                      description: "2",
+                      isColumn: true,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "About",
+                  style: CustomTextStyles.f16W600(color: AppColors.textColor),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  textAlign: TextAlign.justify,
+                  "Lorem ipsum dolor sit amet consectetur. Amet lacus duis augue nisi pharetra. Egestas facilisis aliquam vulputate id sed. Velit faucibus adipiscing proin accumsan quis mi lectus quam euismod. Mattis curabitur diam mattis phasellus nullam. Nec sed malesuada dui cursus diam mattis diam. Facilisis sed nulla quisque quam id bibendum ut lectus elementum. Sit tellus lorem odio morbi.",
+                  style: CustomTextStyles.f12W400(color: AppColors.textColor),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Similar Recommendation",
+                  style: CustomTextStyles.f16W600(color: AppColors.textColor),
+                ),
+                SizedBox(height: 20),
+                RoomCard(
+                  image: ImagePath.bedroom,
+                  title: "Modern Loft Downtown",
+                  price: "NPR 18K/month",
+                  location: "Masbar-7, Pokhara",
+                  isBookAvailable: false,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: InkWell(
+        onTap: () {
+          Get.to(() => RoomScheduleScreen());
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8, bottom: 20),
+          child: Container(
+            height: 50,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: AppColors.primaryColor,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.calendar_month_outlined, color: AppColors.lGrey),
+                Text(
+                  "Book visit now",
+                  style: CustomTextStyles.f16W600(color: AppColors.whiteColor),
                 ),
               ],
             ),
