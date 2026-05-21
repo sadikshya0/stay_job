@@ -6,7 +6,11 @@ import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
 import 'package:safe_job/view/auth/login_screen.dart';
+import 'package:safe_job/view/dashboard/about_screen.dart';
+import 'package:safe_job/view/dashboard/appointment_screen.dart';
 import 'package:safe_job/view/dashboard/edit_profile_screen.dart';
+import 'package:safe_job/view/dashboard/payment_screen.dart';
+import 'package:safe_job/view/dashboard/saved_screen.dart';
 import 'package:safe_job/widgets/profile_widgets/profile_card.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -214,28 +218,48 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 40),
-                ProfileCard(
-                  leadingIcon: Icons.calendar_month_outlined,
-                  title: "Appointments and Visits",
-                  iconColor: AppColors.primaryColor,
+                InkWell(
+                  onTap: () {
+                    Get.to(() => AppointmentScreen());
+                  },
+                  child: ProfileCard(
+                    leadingIcon: Icons.calendar_month_outlined,
+                    title: "Appointments and Visits",
+                    iconColor: AppColors.primaryColor,
+                  ),
                 ),
                 SizedBox(height: 10),
-                ProfileCard(
-                  leadingIcon: Icons.bookmark_outline,
-                  title: "Saved",
-                  iconColor: AppColors.orange,
+                InkWell(
+                  onTap: () {
+                    Get.to(() => SavedScreen());
+                  },
+                  child: ProfileCard(
+                    leadingIcon: Icons.bookmark_outline,
+                    title: "Saved",
+                    iconColor: AppColors.orange,
+                  ),
                 ),
                 SizedBox(height: 10),
-                ProfileCard(
-                  leadingIcon: Icons.wallet_outlined,
-                  title: "Payments",
-                  iconColor: AppColors.green,
+                InkWell(
+                  onTap: () {
+                    Get.to(() => PaymentScreen());
+                  },
+                  child: ProfileCard(
+                    leadingIcon: Icons.wallet_outlined,
+                    title: "Payments",
+                    iconColor: AppColors.green,
+                  ),
                 ),
                 SizedBox(height: 10),
-                ProfileCard(
-                  leadingIcon: Icons.info,
-                  title: "About Us",
-                  iconColor: Colors.redAccent,
+                InkWell(
+                  onTap: () {
+                    Get.to(() => AboutScreen());
+                  },
+                  child: ProfileCard(
+                    leadingIcon: Icons.info,
+                    title: "About Us",
+                    iconColor: Colors.redAccent,
+                  ),
                 ),
                 SizedBox(height: 30),
                 InkWell(

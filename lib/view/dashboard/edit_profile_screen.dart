@@ -21,14 +21,14 @@ class EditProfileScreen extends StatelessWidget {
           onTap: () {
             Get.back();
           },
-          child: Icon(Icons.arrow_back, color: AppColors.textColor, size: 25),
+          child: Icon(Icons.arrow_back, color: AppColors.textColor, size: 22),
         ),
-        title: Center(
-          child: Text(
-            "Edit Profile",
-            style: CustomTextStyles.f18W600(color: AppColors.textColor),
-          ),
+        title: Text(
+          "Edit Profile",
+          style: CustomTextStyles.f18W600(color: AppColors.primaryColor),
         ),
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
