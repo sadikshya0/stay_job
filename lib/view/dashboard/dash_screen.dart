@@ -38,51 +38,54 @@ class DashScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Obx(
-                        () => CustomBottomBar(
-                          svgPath: ImagePath.home,
-                          isActive: c.currentIndex.value == 0,
-                          onTap: () => c.currentIndex.value = 0,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Obx(
+                          () => CustomBottomBar(
+                            svgPath: ImagePath.home,
+                            isActive: c.currentIndex.value == 0,
+                            onTap: () => c.currentIndex.value = 0,
+                          ),
                         ),
-                      ),
-                      Obx(
-                        () => CustomBottomBar(
-                          svgPath: ImagePath.jobs,
+                        Obx(
+                          () => CustomBottomBar(
+                            svgPath: ImagePath.jobs,
 
-                          isActive: c.currentIndex.value == 1,
-                          onTap: () => c.currentIndex.value = 1,
+                            isActive: c.currentIndex.value == 1,
+                            onTap: () => c.currentIndex.value = 1,
+                          ),
                         ),
-                      ),
-                      Obx(
-                        () => CustomBottomBar(
-                          svgPath: ImagePath.explore,
-                          isActive: c.currentIndex.value == 2,
-                          onTap: () => c.currentIndex.value = 2,
+                        Obx(
+                          () => CustomBottomBar(
+                            svgPath: ImagePath.explore,
+                            isActive: c.currentIndex.value == 2,
+                            onTap: () => c.currentIndex.value = 2,
+                          ),
                         ),
-                      ),
 
-                      Obx(
-                        () => CustomBottomBar(
-                          svgPath: ImagePath.rooms,
-                          isActive: c.currentIndex.value == 3,
-                          onTap: () => c.currentIndex.value = 3,
+                        Obx(
+                          () => CustomBottomBar(
+                            svgPath: ImagePath.rooms,
+                            isActive: c.currentIndex.value == 3,
+                            onTap: () => c.currentIndex.value = 3,
+                          ),
                         ),
-                      ),
-                      Obx(
-                        () => CustomBottomBar(
-                          svgPath: ImagePath.profile,
-                          isActive: c.currentIndex.value == 4,
-                          onTap: () => c.currentIndex.value = 4,
+                        Obx(
+                          () => CustomBottomBar(
+                            svgPath: ImagePath.profile,
+                            isActive: c.currentIndex.value == 4,
+                            onTap: () => c.currentIndex.value = 4,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -115,8 +118,8 @@ class CustomBottomBar extends StatelessWidget {
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 250),
-              height: isActive ? 42 : 40,
-              width: isActive ? 42 : 40,
+              height: isActive ? 40 : 38,
+              width: isActive ? 40 : 38,
               child: SvgPicture.asset(
                 svgPath,
                 color: isActive

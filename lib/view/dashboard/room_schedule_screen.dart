@@ -146,29 +146,33 @@ class RoomScheduleScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      children: [
-                        TimeSlotCard(time: "09:30 AM"),
-                        SizedBox(height: 20),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          TimeSlotCard(time: "09:30 AM"),
+                          SizedBox(height: 20),
 
-                        TimeSlotCard(time: "12:00 PM"),
-                        SizedBox(height: 20),
+                          TimeSlotCard(time: "12:00 PM"),
+                          SizedBox(height: 20),
 
-                        TimeSlotCard(time: "02:30 PM"),
-                      ],
+                          TimeSlotCard(time: "02:30 PM"),
+                        ],
+                      ),
                     ),
-                    Column(
-                      children: [
-                        TimeSlotCard(time: "11:00 AM"),
-                        SizedBox(height: 20),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          TimeSlotCard(time: "11:00 AM"),
+                          SizedBox(height: 20),
 
-                        TimeSlotCard(time: "01:30 PM"),
-                        SizedBox(height: 20),
+                          TimeSlotCard(time: "01:30 PM"),
+                          SizedBox(height: 20),
 
-                        TimeSlotCard(time: "04:00 PM"),
-                      ],
+                          TimeSlotCard(time: "04:00 PM"),
+                        ],
+                      ),
                     ),
                   ],
                 ),

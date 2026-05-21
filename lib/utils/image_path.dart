@@ -12,6 +12,7 @@ class ImagePath {
   static const String rooms = "$baseIconPath/room.svg";
   static const String profile = "$baseIconPath/profile.svg";
   static const String polygon = "$baseIconPath/polygon.svg";
+  static const String instagram = "$baseIconPath/instagram.svg";
 
   static const String logo = "$baseImagePath/logo.png";
   static const String job = "$baseImagePath/job.png";
@@ -21,4 +22,5 @@ class ImagePath {
   static const String flat = "$baseImagePath/flat.png";
   static const String bedroom = "$baseImagePath/bedroom.png";
   static const String map = "$baseImagePath/map.png";
+  static const String person = "$baseImagePath/profile.png";
 }

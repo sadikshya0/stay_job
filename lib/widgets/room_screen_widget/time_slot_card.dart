@@ -5,7 +5,7 @@ import 'package:safe_job/utils/custom_text_styles.dart';
 class TimeSlotCard extends StatelessWidget {
   final String time;
   final double height;
-  final double width;
+  final double? width;
 
   final Color? backgroundColor;
   final Color? textColor;
@@ -15,7 +15,7 @@ class TimeSlotCard extends StatelessWidget {
     super.key,
     required this.time,
     this.height = 50,
-    this.width = 180,
+    this.width,
     this.backgroundColor,
     this.textColor,
     this.borderColor,

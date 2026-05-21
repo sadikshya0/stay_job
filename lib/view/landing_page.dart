@@ -86,6 +86,7 @@ class OnboardPage extends StatelessWidget {
   final int currentIndex;
   final int pageIndex;
   final VoidCallback onNext;
+  final Function(int)? onDotTap;
 
   const OnboardPage({
     super.key,
@@ -95,110 +96,98 @@ class OnboardPage extends StatelessWidget {
     required this.currentIndex,
     required this.pageIndex,
     required this.onNext,
+    this.onDotTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
-        Column(
-          children: [
-            // IMAGE
-            Image.asset(image, width: double.infinity, fit: BoxFit.cover),
+        // IMAGE
+        Expanded(
+          child: Image.asset(image, width: double.infinity, fit: BoxFit.cover),
+        ),
 
-            Container(
-              height: 300,
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 8,
-                    spreadRadius: 2,
-                    color: Colors.black12,
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // TITLE
-                    Text(
-                      title,
-                      style: CustomTextStyles.f18W600(
-                        color: AppColors.primaryColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // DESCRIPTION
-                    Text(
-                      description,
-                      style: CustomTextStyles.f14W600(
-                        color: AppColors.textColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // DOTS
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(3, (index) {
-                        return GestureDetector(
-                          child: Container(
-                            margin: const EdgeInsets.all(5),
-                            width: currentIndex == index ? 50 : 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              color: currentIndex == index
-                                  ? AppColors.primaryColor
-                                  : AppColors.lGrey,
-
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-
-                    SizedBox(height: 20),
-
-                    // BUTTON
-                    SizedBox(
-                      width: double.infinity,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: onNext,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          currentIndex == 2 ? "Continue" : "Continue",
-                          style: CustomTextStyles.f16W600(
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+        // BOTTOM CONTAINER
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: AppColors.whiteColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
             ),
-          ],
+            boxShadow: const [
+              BoxShadow(blurRadius: 8, spreadRadius: 2, color: Colors.black12),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: CustomTextStyles.f18W600(color: AppColors.primaryColor),
+              ),
+
+              const SizedBox(height: 15),
+
+              Text(
+                description,
+                textAlign: TextAlign.center,
+                style: CustomTextStyles.f14W600(color: AppColors.textColor),
+              ),
+
+              const SizedBox(height: 20),
+
+              // DOTS
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(3, (index) {
+                  final isActive = currentIndex == index;
+
+                  return GestureDetector(
+                    onTap: () => onDotTap?.call(index),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      margin: const EdgeInsets.all(5),
+                      width: isActive ? 40 : 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: isActive
+                            ? AppColors.primaryColor
+                            : AppColors.lGrey,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+
+              const SizedBox(height: 20),
+
+              SizedBox(
+                width: double.infinity,
+                height: 45,
+                child: ElevatedButton(
+                  onPressed: onNext,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    currentIndex == 2 ? "Continue" : "Continue",
+                    style: CustomTextStyles.f16W600(
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

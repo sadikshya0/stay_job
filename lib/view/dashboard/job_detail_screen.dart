@@ -39,72 +39,96 @@ class JobDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Fresh Elements Restaurant and Bar",
-                          style: CustomTextStyles.f16W400(
-                            color: AppColors.secondaryTextColor,
+                    // LEFT SIDE TEXT
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Fresh Elements Restaurant and Bar",
+                            style: CustomTextStyles.f16W400(
+                              color: AppColors.secondaryTextColor,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          "Waiter",
-                          style: CustomTextStyles.f18W600(
-                            color: AppColors.textColor,
-                          ),
-                        ),
-                        SizedBox(height: 10),
 
-                        Row(
-                          children: [
-                            Container(
-                              height: 25,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                border: Border.all(
-                                  color: AppColors.secondaryTextColor,
+                          const SizedBox(height: 10),
+
+                          Text(
+                            "Waiter",
+                            style: CustomTextStyles.f18W600(
+                              color: AppColors.textColor,
+                            ),
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          Row(
+                            children: [
+                              Container(
+                                height: 25,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
                                 ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "FULL TIME",
-                                  style: CustomTextStyles.f14W600(
-                                    color: AppColors.primaryColor,
+                                decoration: BoxDecoration(
+                                  color: AppColors.whiteColor,
+                                  border: Border.all(
+                                    color: AppColors.secondaryTextColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "FULL TIME",
+                                    style: CustomTextStyles.f12W600(
+                                      color: AppColors.primaryColor,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            Container(
-                              height: 25,
-                              width: 130,
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                border: Border.all(
-                                  color: AppColors.secondaryTextColor,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "REMOTE WORKING",
-                                  style: CustomTextStyles.f14W600(
-                                    color: AppColors.primaryColor,
+
+                              const SizedBox(width: 10),
+
+                              Flexible(
+                                child: Container(
+                                  height: 25,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.whiteColor,
+                                    border: Border.all(
+                                      color: AppColors.secondaryTextColor,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "REMOTE WORKING",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: CustomTextStyles.f12W600(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    Image.asset(ImagePath.job, height: 100, width: 100),
+
+                    const SizedBox(width: 10),
+
+                    // RIGHT SIDE IMAGE
+                    Image.asset(
+                      ImagePath.job,
+                      height: 80,
+                      width: 80,
+                      fit: BoxFit.cover,
+                    ),
                   ],
                 ),
                 SizedBox(height: 10),

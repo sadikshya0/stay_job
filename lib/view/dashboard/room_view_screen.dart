@@ -25,43 +25,50 @@ class RoomViewScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Image.asset(
-                      ImagePath.flat,
-                      height: 270,
-                      width: double.infinity,
+                    // IMAGE
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        ImagePath.flat,
+                        height: 270,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
+
+                    // BACK BUTTON
                     Positioned(
-                      top: 30,
-                      left: 8,
+                      top: 20,
+                      left: 12,
                       child: InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Icon(
+                        onTap: () => Get.back(),
+                        child: const Icon(
                           Icons.arrow_back,
                           size: 24,
-                          color: AppColors.whiteColor,
+                          color: Colors.white,
                         ),
                       ),
                     ),
+
+                    // LAYERS ICON
                     Positioned(
-                      top: 35,
-                      right: 8,
+                      top: 20,
+                      right: 12,
                       child: Icon(
                         Icons.layers_outlined,
-                        color: AppColors.textColor.withOpacity(0.5),
+                        color: Colors.white.withOpacity(0.7),
                       ),
                     ),
+
+                    // VIEW ALL PHOTOS BUTTON
                     Positioned(
-                      bottom: 35,
-                      right: 8,
+                      bottom: 10,
+                      right: 12,
                       child: InkWell(
-                        onTap: () {
-                          Get.to(() => RoomPhotoScreen());
-                        },
+                        onTap: () => Get.to(() => const RoomPhotoScreen()),
                         child: Container(
-                          height: 30,
-                          width: 100,
+                          height: 32,
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.amber,
@@ -79,6 +86,7 @@ class RoomViewScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -96,31 +104,38 @@ class RoomViewScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.location_on,
-                      color: AppColors.primaryColor,
-                      size: 20,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: AppColors.primaryColor,
+                          size: 20,
+                        ),
+                        Text(
+                          "Masbar-7, Pokhara",
+                          style: CustomTextStyles.f14W600(
+                            color: AppColors.textColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "Masbar-7, Pokhara",
-                      style: CustomTextStyles.f14W600(
-                        color: AppColors.textColor,
-                      ),
-                    ),
-                    SizedBox(width: 85),
-                    Icon(
-                      Icons.calendar_month_outlined,
-                      color: AppColors.primaryColor,
-                      size: 20,
-                    ),
-                    SizedBox(width: 5),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.calendar_month_outlined,
+                          color: AppColors.primaryColor,
+                          size: 20,
+                        ),
 
-                    Text(
-                      "Expires: 3/29/2026",
-                      style: CustomTextStyles.f14W600(
-                        color: AppColors.secondaryTextColor,
-                      ),
+                        Text(
+                          "Expires: 3/29/2026",
+                          style: CustomTextStyles.f14W600(
+                            color: AppColors.secondaryTextColor,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -243,11 +258,15 @@ class RoomViewScreen extends StatelessWidget {
                       title: "wifi",
                       isColumn: false,
                     ),
+                    SizedBox(width: 8),
+
                     AmenityCard(
                       icon: Icons.ac_unit_sharp,
                       title: "AC",
                       isColumn: false,
                     ),
+                    SizedBox(width: 8),
+
                     AmenityCard(
                       icon: Icons.kitchen,
                       title: "Kitchen",
@@ -258,7 +277,7 @@ class RoomViewScreen extends StatelessWidget {
                 SizedBox(height: 10),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AmenityCard(
                       icon: Icons.door_front_door_outlined,
@@ -266,12 +285,15 @@ class RoomViewScreen extends StatelessWidget {
                       description: "2",
                       isColumn: true,
                     ),
+                    SizedBox(width: 8),
                     AmenityCard(
                       icon: Icons.car_rental_outlined,
                       title: "Parking",
                       description: "Available",
                       isColumn: true,
                     ),
+                    SizedBox(width: 8),
+
                     AmenityCard(
                       icon: Icons.bathtub_outlined,
                       title: "bathroom",

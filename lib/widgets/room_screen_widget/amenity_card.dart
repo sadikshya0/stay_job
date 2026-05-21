@@ -12,7 +12,7 @@ class AmenityCard extends StatelessWidget {
   final Color? textColor;
 
   final double? height;
-  final double width;
+  final double? width;
 
   final bool isColumn;
 
@@ -25,23 +25,24 @@ class AmenityCard extends StatelessWidget {
     this.iconColor,
     this.textColor,
     this.height,
-    this.width = 110,
+    this.width,
     this.isColumn = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? (isColumn ? 85 : 40),
-      width: width,
-      padding: const EdgeInsets.all(8),
+    return Expanded(
+      child: Container(
+        height: height ?? (isColumn ? 85 : 40),
+        padding: const EdgeInsets.all(8),
 
-      decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.lGrey,
-        borderRadius: BorderRadius.circular(15),
+        decoration: BoxDecoration(
+          color: backgroundColor ?? AppColors.lGrey,
+          borderRadius: BorderRadius.circular(15),
+        ),
+
+        child: isColumn ? _buildColumn() : _buildRow(),
       ),
-
-      child: isColumn ? _buildColumn() : _buildRow(),
     );
   }
 
