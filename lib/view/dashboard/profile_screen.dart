@@ -11,6 +11,7 @@ import 'package:safe_job/view/dashboard/appointment_screen.dart';
 import 'package:safe_job/view/dashboard/edit_profile_screen.dart';
 import 'package:safe_job/view/dashboard/payment_screen.dart';
 import 'package:safe_job/view/dashboard/saved_screen.dart';
+import 'package:safe_job/view/dashboard/setting_screen.dart';
 import 'package:safe_job/widgets/profile_widgets/profile_card.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -41,7 +42,16 @@ class ProfileScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(Icons.settings, color: AppColors.textColor, size: 24),
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => SettingScreen());
+                    },
+                    child: Icon(
+                      Icons.settings,
+                      color: AppColors.textColor,
+                      size: 24,
+                    ),
+                  ),
                   SizedBox(width: 10),
                   Icon(
                     Icons.dark_mode_outlined,
