@@ -13,6 +13,9 @@ class ImagePath {
   static const String profile = "$baseIconPath/profile.svg";
   static const String polygon = "$baseIconPath/polygon.svg";
   static const String instagram = "$baseIconPath/instagram.svg";
+  static const String esewa = "$baseIconPath/esewa.svg";
+  static const String paypal = "$baseIconPath/paypal.svg";
+  static const String visa = "$baseIconPath/visa.svg";
 
   static const String logo = "$baseImagePath/logo.png";
   static const String job = "$baseImagePath/job.png";

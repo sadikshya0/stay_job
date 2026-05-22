@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
+import 'package:safe_job/view/dashboard/appointment_detail_screen.dart';
 
 class VisitCard extends StatelessWidget {
   final String image;
@@ -111,17 +114,22 @@ class VisitCard extends StatelessWidget {
                   ),
 
                   // STATUS
-                  Container(
-                    height: 20,
-                    width: 90,
-                    decoration: BoxDecoration(
-                      color: _bgColor(),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        status.toUpperCase(),
-                        style: CustomTextStyles.f12W600(color: _textColor()),
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => AppointmentDetailScreen());
+                    },
+                    child: Container(
+                      height: 20,
+                      width: 90,
+                      decoration: BoxDecoration(
+                        color: _bgColor(),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Text(
+                          status.toUpperCase(),
+                          style: CustomTextStyles.f12W600(color: _textColor()),
+                        ),
                       ),
                     ),
                   ),

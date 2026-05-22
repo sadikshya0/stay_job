@@ -24,7 +24,7 @@ class CustomTextStyles {
       color: color,
       fontFamily: "Roboto",
       fontSize: 12,
-      fontWeight: FontWeight.w300,
+      fontWeight: FontWeight.w600,
     );
   }
 
