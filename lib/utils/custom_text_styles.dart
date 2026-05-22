@@ -23,7 +23,7 @@ class CustomTextStyles {
     return TextStyle(
       color: color,
       fontFamily: "Roboto",
-      fontSize: 12,
+      fontSize: 10,
       fontWeight: FontWeight.w600,
     );
   }
