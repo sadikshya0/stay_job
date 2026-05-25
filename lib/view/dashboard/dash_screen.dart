@@ -16,79 +16,71 @@ class DashScreen extends StatelessWidget {
       body: Obx(() => c.pages[c.currentIndex.value]),
 
       bottomNavigationBar: SafeArea(
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                bottom: 18,
-                top: 12,
-              ),
+        child: Container(
+          padding: const EdgeInsets.only(
+            left: 16,
+            right: 16,
+            bottom: 18,
+            top: 12,
+          ),
 
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.lGrey.withOpacity(0.4),
-                    blurRadius: 2,
-                    spreadRadius: 1.5,
-                    offset: const Offset(0, -3),
+          decoration: BoxDecoration(
+            color: AppColors.whiteColor,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.lGrey.withOpacity(0.4),
+                blurRadius: 2,
+                spreadRadius: 1.5,
+                offset: const Offset(0, -3),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Obx(
+                    () => CustomBottomBar(
+                      svgPath: ImagePath.home,
+                      isActive: c.currentIndex.value == 0,
+                      onTap: () => c.currentIndex.value = 0,
+                    ),
+                  ),
+                  Obx(
+                    () => CustomBottomBar(
+                      svgPath: ImagePath.jobs,
+
+                      isActive: c.currentIndex.value == 1,
+                      onTap: () => c.currentIndex.value = 1,
+                    ),
+                  ),
+                  Obx(
+                    () => CustomBottomBar(
+                      svgPath: ImagePath.explore,
+                      isActive: c.currentIndex.value == 2,
+                      onTap: () => c.currentIndex.value = 2,
+                    ),
+                  ),
+
+                  Obx(
+                    () => CustomBottomBar(
+                      svgPath: ImagePath.rooms,
+                      isActive: c.currentIndex.value == 3,
+                      onTap: () => c.currentIndex.value = 3,
+                    ),
+                  ),
+                  Obx(
+                    () => CustomBottomBar(
+                      svgPath: ImagePath.profile,
+                      isActive: c.currentIndex.value == 4,
+                      onTap: () => c.currentIndex.value = 4,
+                    ),
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Obx(
-                          () => CustomBottomBar(
-                            svgPath: ImagePath.home,
-                            isActive: c.currentIndex.value == 0,
-                            onTap: () => c.currentIndex.value = 0,
-                          ),
-                        ),
-                        Obx(
-                          () => CustomBottomBar(
-                            svgPath: ImagePath.jobs,
-
-                            isActive: c.currentIndex.value == 1,
-                            onTap: () => c.currentIndex.value = 1,
-                          ),
-                        ),
-                        Obx(
-                          () => CustomBottomBar(
-                            svgPath: ImagePath.explore,
-                            isActive: c.currentIndex.value == 2,
-                            onTap: () => c.currentIndex.value = 2,
-                          ),
-                        ),
-
-                        Obx(
-                          () => CustomBottomBar(
-                            svgPath: ImagePath.rooms,
-                            isActive: c.currentIndex.value == 3,
-                            onTap: () => c.currentIndex.value = 3,
-                          ),
-                        ),
-                        Obx(
-                          () => CustomBottomBar(
-                            svgPath: ImagePath.profile,
-                            isActive: c.currentIndex.value == 4,
-                            onTap: () => c.currentIndex.value = 4,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
