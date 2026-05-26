@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:get/get.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
@@ -20,6 +19,8 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
+
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),

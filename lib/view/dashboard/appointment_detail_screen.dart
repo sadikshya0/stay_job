@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:get/get.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
-import 'package:safe_job/view/dashboard/dash_screen.dart';
 import 'package:safe_job/view/dashboard/profile_screen.dart';
 
 class AppointmentDetailScreen extends StatelessWidget {
@@ -13,6 +11,8 @@ class AppointmentDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
+
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         leading: InkWell(
