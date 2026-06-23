@@ -104,7 +104,7 @@ class CustomBottomBar extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 13.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

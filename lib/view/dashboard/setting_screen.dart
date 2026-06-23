@@ -19,8 +19,6 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
