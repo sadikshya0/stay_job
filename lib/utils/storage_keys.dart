@@ -5,8 +5,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:safe_job/model/users.dart';
 
 class StorageKeys {
-  static const String USER = "user";
-  static const String ACCESS_TOKEN = "accessToken";
+  static const USER = "user";
+  static const ACCESS_TOKEN = "access_token";
 }
 
 class StorageHelper {

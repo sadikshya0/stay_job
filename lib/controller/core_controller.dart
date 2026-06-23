@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:safe_job/model/users.dart';
 import 'package:safe_job/utils/storage_keys.dart';
 
@@ -13,17 +14,24 @@ class CoreController extends GetxController {
     loadCurrentUser();
   }
 
-  /// LOAD USER FROM STORAGE
   void loadCurrentUser() {
     currentUser.value = StorageHelper.getUser();
-    userToken.value = StorageHelper.getToken() ?? "";
+    userToken.value =
+        StorageHelper.getToken() ?? currentUser.value?.token ?? "";
 
-    log("User Phone: ${currentUser.value?.user}");
-    log("Token: ${userToken.value}");
+    log("TOKEN => ${userToken.value}");
+    log("User phone: ${currentUser.value?.user?.phone ?? ""}");
   }
 
-  /// CHECK LOGIN STATUS
   bool isUserLoggedIn() {
-    return currentUser.value != null;
+    return userToken.value.isNotEmpty;
+  }
+
+  void clearUser() async {
+    currentUser.value = null;
+    userToken.value = "";
+    final box = GetStorage();
+    await box.remove(StorageKeys.USER);
+    await box.remove(StorageKeys.ACCESS_TOKEN);
   }
 }

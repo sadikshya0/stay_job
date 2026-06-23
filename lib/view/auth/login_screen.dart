@@ -7,7 +7,6 @@ import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
 import 'package:safe_job/utils/validator.dart';
 import 'package:safe_job/view/auth/register_screen.dart';
-import 'package:safe_job/view/dashboard/dash_screen.dart';
 import 'package:safe_job/widgets/custom/custom_password.dart';
 import 'package:safe_job/widgets/custom/custom_textfield.dart';
 import 'package:safe_job/widgets/custom/elevated_button.dart';

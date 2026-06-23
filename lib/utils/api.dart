@@ -3,4 +3,5 @@ class Api {
 
   static const String loginUrl = "$baseUrl/login.php";
   static const String registerUrl = "$baseUrl/register.php";
+  static const String getRoomUrl = "$baseUrl/get_room.php";
 }

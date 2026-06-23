@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:safe_job/controller/dashboard/room_screen_controller.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
-import 'package:safe_job/utils/image_path.dart';
+import 'package:safe_job/view/dashboard/room_schedule_screen.dart';
+import 'package:safe_job/view/dashboard/room_view_screen.dart';
 import 'package:safe_job/widgets/room_screen_widget/room_card.dart';
 
 class RoomScreen extends StatelessWidget {
   RoomScreen({super.key});
+
   final controller = Get.put(RoomScreenController());
 
   @override
@@ -46,18 +48,32 @@ class RoomScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
           child: Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
             final index = controller.selectedIndex.value;
 
-            final filtered = controller.room.where((room) {
-              final title = room["title"].toString();
+            final filtered = controller.roomList.where((room) {
+              final type = (room.roomType).toLowerCase();
 
-              if (index == 0) return true;
-              if (index == 1) return title.contains("Flat");
-              if (index == 2) return title.contains("Single");
-              if (index == 3) return title.contains("House");
-
-              return true;
+              switch (index) {
+                case 0:
+                  return true;
+                case 1:
+                  return type == "apartment";
+                case 2:
+                  return type == "single";
+                case 3:
+                  return type == "house";
+                default:
+                  return true;
+              }
             }).toList();
+
+            if (filtered.isEmpty) {
+              return const Center(child: Text("No rooms available"));
+            }
 
             return ListView.builder(
               itemCount: filtered.length,
@@ -67,10 +83,16 @@ class RoomScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: RoomCard(
-                    image: ImagePath.flat,
-                    title: room["title"],
-                    price: room["price"],
-                    location: room["location"],
+                    image: room.image,
+                    title: room.title,
+                    price: "Rs. ${room.rentAmount}",
+                    location: room.location,
+                    onViewTap: () {
+                      Get.to(() => RoomViewScreen(room: room));
+                    },
+                    onBookTap: () {
+                      Get.to(RoomScheduleScreen());
+                    },
                   ),
                 );
               },

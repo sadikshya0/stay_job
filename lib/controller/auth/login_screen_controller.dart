@@ -29,16 +29,22 @@ class LoginScreenController extends GetxController {
   void onSubmit() async {
     if (formKey.currentState!.validate()) {
       loading.show(message: "Please wait..");
+
       await LoginRepo.loginRepo(
         phone: phoneController.text,
         password: passwordController.text,
         onSuccess: (user, token, message) async {
           loading.hide();
+
           final box = GetStorage();
+
           await box.write(StorageKeys.USER, json.encode(user.toJson()));
-          await box.write(StorageKeys.ACCESS_TOKEN, token.toString());
+          await box.write(StorageKeys.ACCESS_TOKEN, token);
+
           Get.put(CoreController()).loadCurrentUser();
-          Get.to(() => DashScreen());
+
+          Get.offAll(() => DashScreen());
+
           CustomSnackBar.success(title: "Login", message: message);
         },
         onError: (message) {

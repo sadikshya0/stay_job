@@ -1,27 +1,37 @@
 import 'package:get/get.dart';
+import 'package:safe_job/model/room.dart';
+import 'package:safe_job/repo/get_room_repo.dart';
 
 class RoomScreenController extends GetxController {
   var selectedIndex = 0.obs;
+  var isLoading = false.obs;
+
+  RxList<Room> roomList = <Room>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchRooms();
+  }
 
   void changeIndex(int index) {
     selectedIndex.value = index;
   }
 
-  final List<Map<String, dynamic>> room = [
-    {
-      "title": "Modern 2BHK Flat",
-      "price": "NPR 18K/ month",
-      "location": "Masbar-7, pokhara",
-    },
-    {
-      "title": "Single Room",
-      "price": "NPR 25K/ month",
-      "location": "Masbar-7, pokhara",
-    },
-    {
-      "title": "Modern lift Downtown",
-      "price": "NPR 15K/ month",
-      "location": "Masbar-7, pokhara",
-    },
-  ];
+  Future<void> fetchRooms() async {
+    try {
+      isLoading.value = true;
+
+      await GetRoomRepo.roomRepo(
+        onSuccess: (rooms) {
+          roomList.assignAll(rooms);
+        },
+        onError: (message) {
+          Get.snackbar("Error", message);
+        },
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }
