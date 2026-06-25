@@ -4,7 +4,6 @@ import 'package:safe_job/model/book.dart';
 import 'package:safe_job/repo/cancel_booking_repo.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
-import 'package:safe_job/view/dashboard/appointment_screen.dart';
 
 class AppointmentDetailScreen extends StatelessWidget {
   final Book book;

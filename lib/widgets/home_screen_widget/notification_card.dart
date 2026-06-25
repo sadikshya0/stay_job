@@ -6,15 +6,13 @@ class NotificationCard extends StatelessWidget {
   final String title;
   final String description;
   final String time;
-  final Color containerColor;
-
-  // Optional colors
+  final VoidCallback? onMarkAsRead;
+  final VoidCallback? onDelete;
   final Color? titleColor;
   final Color? descriptionColor;
   final Color? timeColor;
   final Color? markAsReadColor;
-
-  // Optional mark as read
+  final Widget? trailing;
   final bool showMarkAsRead;
 
   const NotificationCard({
@@ -22,13 +20,15 @@ class NotificationCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.time,
-    required this.containerColor,
+    this.trailing,
 
     this.titleColor,
     this.descriptionColor,
     this.timeColor,
     this.markAsReadColor,
     this.showMarkAsRead = true,
+    this.onMarkAsRead,
+    this.onDelete,
   });
 
   @override
@@ -37,7 +37,7 @@ class NotificationCard extends StatelessWidget {
       height: 110,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: containerColor,
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.lGrey),
       ),
@@ -54,9 +54,8 @@ class NotificationCard extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
 
-            // DESCRIPTION
             Text(
               description,
               style: CustomTextStyles.f14W400(
@@ -64,9 +63,8 @@ class NotificationCard extends StatelessWidget {
               ),
             ),
 
-            const Spacer(),
+            Spacer(),
 
-            // BOTTOM ROW
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -78,7 +76,7 @@ class NotificationCard extends StatelessWidget {
                       size: 18,
                     ),
 
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
 
                     Text(
                       time,
@@ -89,14 +87,25 @@ class NotificationCard extends StatelessWidget {
                   ],
                 ),
 
-                // OPTIONAL MARK AS READ
                 if (showMarkAsRead)
-                  Text(
-                    "Mark as read",
-                    style: CustomTextStyles.f12W400(
-                      color: markAsReadColor ?? AppColors.whiteColor,
+                  InkWell(
+                    onTap: onMarkAsRead,
+                    child: Text(
+                      "Mark as read",
+                      style: CustomTextStyles.f12W400(
+                        color: markAsReadColor ?? AppColors.whiteColor,
+                      ),
                     ),
                   ),
+                InkWell(
+                  onTap: onDelete,
+                  child: const Icon(
+                    Icons.delete_outline,
+                    color: AppColors.secondaryTextColor,
+                    size: 20,
+                  ),
+                ),
+                if (trailing != null) ...[SizedBox(height: 6), trailing!],
               ],
             ),
           ],

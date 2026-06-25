@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:safe_job/controller/dashboard/notification_controller.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
@@ -48,12 +49,55 @@ class HomeScreen extends StatelessWidget {
                   child: CircleIconButton(icon: Icons.messenger_outline),
                 ),
                 SizedBox(width: 10),
-                InkWell(
-                  onTap: () {
-                    Get.offAll(() => NotificationScreen());
-                  },
-                  child: CircleIconButton(icon: Icons.notifications_none),
-                ),
+                Obx(() {
+                  final controller = Get.put(NotificationController());
+
+                  return InkWell(
+                    onTap: () {
+                      Get.to(() => NotificationScreen());
+                    },
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.whiteColor,
+                            border: Border.all(
+                              color: AppColors.lGrey,
+                              width: 1,
+                            ),
+                          ),
+                          child: CircleIconButton(
+                            icon: Icons.notifications_outlined,
+                          ),
+                        ),
+
+                        if (controller.unreadCount > 0)
+                          Positioned(
+                            right: -2,
+                            top: -2,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Text(
+                                controller.unreadCount.toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  );
+                }),
               ],
             ),
           ],
