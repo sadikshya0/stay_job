@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
+import 'package:safe_job/model/room.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
 import 'package:safe_job/view/dashboard/dash_screen.dart';
 
 class RoomAppointmentScreen extends StatelessWidget {
-  const RoomAppointmentScreen({super.key});
+  RoomAppointmentScreen({super.key});
+
+  final Map<String, dynamic> args = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    final Room room = args["room"];
+    final DateTime? selectedDate = args["date"];
+    final String selectedTime = args["time"] ?? "";
+
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
@@ -27,22 +32,27 @@ class RoomAppointmentScreen extends StatelessWidget {
                   shadows: [
                     Shadow(
                       color: AppColors.green.withOpacity(0.3),
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+
+              const SizedBox(height: 30),
+
               Text(
                 "Visit Schedule",
                 style: CustomTextStyles.f20W600(color: AppColors.textColor),
               ),
+
               Text(
-                "Your appointment to visit Modern loft Downtown apartment has been successfully scheduled.",
-                style: CustomTextStyles.f14W400(color: AppColors.textColor),
+                "Your appointment has been successfully scheduled.",
                 textAlign: TextAlign.center,
+                style: CustomTextStyles.f14W400(color: AppColors.textColor),
               ),
-              SizedBox(height: 40),
+
+              const SizedBox(height: 40),
+
               Container(
                 height: 180,
                 width: double.infinity,
@@ -51,49 +61,69 @@ class RoomAppointmentScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(
-                              ImagePath.bedroom,
+                            child: Image.network(
+                              room.image ?? "",
                               height: 70,
                               width: 90,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) {
+                                return Image.asset(
+                                  ImagePath.bedroom,
+                                  height: 70,
+                                  width: 90,
+                                  fit: BoxFit.cover,
+                                );
+                              },
                             ),
                           ),
-                          SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Modern loft Downtown",
-                                style: CustomTextStyles.f16W600(
-                                  color: AppColors.textColor,
+
+                          const SizedBox(width: 8),
+
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  room.title ?? "",
+                                  style: CustomTextStyles.f16W600(
+                                    color: AppColors.textColor,
+                                  ),
                                 ),
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    size: 18,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                  Text(
-                                    "Modern loft Downtown",
-                                    style: CustomTextStyles.f14W400(
-                                      color: AppColors.secondaryTextColor,
+
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      size: 18,
+                                      color: AppColors.primaryColor,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+
+                                    Expanded(
+                                      child: Text(
+                                        room.location ?? "",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: CustomTextStyles.f14W400(
+                                          color: AppColors.secondaryTextColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
+
+                      const SizedBox(height: 20),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -101,9 +131,10 @@ class RoomAppointmentScreen extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.calendar_month_outlined,
-                                color: AppColors.secondaryTextColor,
                                 size: 18,
+                                color: AppColors.secondaryTextColor,
                               ),
+                              const SizedBox(width: 4),
                               Text(
                                 "Date",
                                 style: CustomTextStyles.f14W400(
@@ -112,13 +143,15 @@ class RoomAppointmentScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+
                           Row(
                             children: [
                               Icon(
                                 Icons.access_time_outlined,
-                                color: AppColors.secondaryTextColor,
                                 size: 18,
+                                color: AppColors.secondaryTextColor,
                               ),
+                              const SizedBox(width: 4),
                               Text(
                                 "Time",
                                 style: CustomTextStyles.f14W400(
@@ -129,17 +162,23 @@ class RoomAppointmentScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+
+                      const SizedBox(height: 8),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "23 Feb, Mon",
+                            selectedDate != null
+                                ? "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"
+                                : "-",
                             style: CustomTextStyles.f14W600(
                               color: AppColors.textColor,
                             ),
                           ),
+
                           Text(
-                            "11:00am",
+                            selectedTime,
                             style: CustomTextStyles.f14W600(
                               color: AppColors.textColor,
                             ),
@@ -150,7 +189,9 @@ class RoomAppointmentScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+
+              const SizedBox(height: 40),
+
               InkWell(
                 onTap: () {
                   Get.offAll(() => DashScreen());

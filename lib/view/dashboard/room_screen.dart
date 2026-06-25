@@ -55,7 +55,7 @@ class RoomScreen extends StatelessWidget {
             final index = controller.selectedIndex.value;
 
             final filtered = controller.roomList.where((room) {
-              final type = (room.roomType).toLowerCase();
+              final type = room.roomType;
 
               switch (index) {
                 case 0:
@@ -83,15 +83,15 @@ class RoomScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: RoomCard(
-                    image: room.image,
-                    title: room.title,
+                    image: room.image ?? "",
+                    title: room.title ?? "",
                     price: "Rs. ${room.rentAmount}",
-                    location: room.location,
+                    location: room.location ?? "",
                     onViewTap: () {
                       Get.to(() => RoomViewScreen(room: room));
                     },
                     onBookTap: () {
-                      Get.to(RoomScheduleScreen());
+                      Get.to(() => RoomScheduleScreen(room: room));
                     },
                   ),
                 );

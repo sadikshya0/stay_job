@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:safe_job/model/book.dart';
+import 'package:safe_job/repo/cancel_booking_repo.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
-import 'package:safe_job/utils/image_path.dart';
-import 'package:safe_job/view/dashboard/profile_screen.dart';
+import 'package:safe_job/view/dashboard/appointment_screen.dart';
 
 class AppointmentDetailScreen extends StatelessWidget {
-  const AppointmentDetailScreen({super.key});
+  final Book book;
+
+  const AppointmentDetailScreen({super.key, required this.book});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +43,9 @@ class AppointmentDetailScreen extends StatelessWidget {
                     // IMAGE
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        ImagePath.flat,
-                        height: 200,
+                      child: Image.network(
+                        book.room?.image ?? "",
+                        height: 270,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),
@@ -60,7 +63,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            "PENDING",
+                            book.booking?.status ?? "",
                             style: CustomTextStyles.f12W600(
                               color: AppColors.whiteColor,
                             ),
@@ -72,7 +75,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "Modern 2BHK Flat",
+                  book.room?.roomType ?? "",
                   style: CustomTextStyles.f16W600(color: AppColors.textColor),
                 ),
 
@@ -88,7 +91,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                           size: 16,
                         ),
                         Text(
-                          "Masbar-7, Pokhara",
+                          book.room?.location ?? "",
                           style: CustomTextStyles.f12W600(
                             color: AppColors.secondaryTextColor,
                           ),
@@ -126,7 +129,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                                     color: AppColors.secondaryTextColor,
                                   ),
                                   Text(
-                                    "March 15, 2026",
+                                    book.booking?.date ?? "",
                                     style: CustomTextStyles.f14W600(
                                       color: AppColors.textColor,
                                     ),
@@ -138,7 +141,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 40),
+                    SizedBox(width: 2),
                     Expanded(
                       child: Container(
                         height: 60,
@@ -165,7 +168,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                                     color: AppColors.secondaryTextColor,
                                   ),
                                   Text(
-                                    "12:00 PM",
+                                    "${book.slot?.startTime ?? ""} - ${book.slot?.endTime ?? ""}",
                                     style: CustomTextStyles.f14W600(
                                       color: AppColors.textColor,
                                     ),
@@ -202,12 +205,10 @@ class AppointmentDetailScreen extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: AppColors.lGrey,
                             ),
-                            child: Text(
-                              "J",
-                              style: CustomTextStyles.f28W600(
-                                color: AppColors.secondaryTextColor,
+                            child: ClipOval(
+                              child: Image.network(
+                                book.room?.vendor?.profileImage ?? "",
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                           SizedBox(width: 6),
@@ -217,14 +218,14 @@ class AppointmentDetailScreen extends StatelessWidget {
 
                             children: [
                               Text(
-                                "John Doe",
+                                book.room?.vendor?.name ?? "",
                                 style: CustomTextStyles.f12W600(
                                   color: AppColors.whiteColor,
                                 ),
                               ),
 
                               Text(
-                                "Property owner",
+                                book.room?.vendor?.vendorType ?? "",
                                 style: CustomTextStyles.f12W400(
                                   color: AppColors.secondaryTextColor,
                                 ),
@@ -261,7 +262,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Container(
-                  height: 75,
+                  height: 100,
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.lGrey),
                     borderRadius: BorderRadius.circular(15),
@@ -270,7 +271,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Look forward to visiting the room at the schedule time.",
+                        book.booking?.notes ?? "",
                         style: CustomTextStyles.f12W400(
                           color: AppColors.textColor,
                         ),
@@ -282,7 +283,38 @@ class AppointmentDetailScreen extends StatelessWidget {
                 Center(
                   child: InkWell(
                     onTap: () {
-                      Get.to(() => ProfileScreen());
+                      Get.defaultDialog(
+                        title: "Cancel Booking",
+                        middleText: "Do you want to cancel this booking?",
+                        textConfirm: "Yes",
+                        textCancel: "No",
+                        confirmTextColor: Colors.white,
+                        buttonColor: Colors.red,
+                        cancelTextColor: AppColors.primaryColor,
+                        radius: 12,
+                        onConfirm: () {
+                          // Close the confirmation dialog first
+                          Get.back();
+
+                          CancelBookingRepo.cancelBookingRepo(
+                            bookingId: book.booking?.id ?? "",
+                            onSuccess: (message) {
+                              Get.snackbar(
+                                "Success",
+                                message,
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            },
+                            onError: (message) {
+                              Get.snackbar(
+                                "Error",
+                                message,
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            },
+                          );
+                        },
+                      );
                     },
                     child: Container(
                       height: 45,

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:safe_job/controller/dashboard/room_schedule_controller.dart';
+import 'package:safe_job/model/room.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
-import 'package:safe_job/view/dashboard/room_appointment_screen.dart';
-import 'package:safe_job/widgets/room_screen_widget/day_date_card.dart';
 import 'package:safe_job/widgets/room_screen_widget/time_slot_card.dart';
 
 class RoomScheduleScreen extends StatelessWidget {
-  const RoomScheduleScreen({super.key});
+  final RoomScheduleController controller = Get.put(RoomScheduleController());
+  final Room room;
+
+  RoomScheduleScreen({super.key, required this.room});
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +54,28 @@ class RoomScheduleScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(ImagePath.bedroom),
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                            room.image ?? "",
+                            height: 70,
+                            width: 90,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) {
+                              return Image.asset(
+                                ImagePath.bedroom,
+                                height: 70,
+                                width: 90,
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          ),
                         ),
                         SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Modern 2BHK Flat",
+                              room.title ?? "",
                               style: CustomTextStyles.f16W600(
                                 color: AppColors.textColor,
                               ),
@@ -71,7 +88,7 @@ class RoomScheduleScreen extends StatelessWidget {
                                   size: 16,
                                 ),
                                 Text(
-                                  "Masbar-7, POkhara",
+                                  room.location ?? "",
                                   style: CustomTextStyles.f12W600(
                                     color: AppColors.secondaryTextColor,
                                   ),
@@ -79,7 +96,7 @@ class RoomScheduleScreen extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              "NPR 18K/month",
+                              "NPR ${room.rentAmount}/month",
                               style: CustomTextStyles.f16W600(
                                 color: AppColors.green,
                               ),
@@ -91,89 +108,44 @@ class RoomScheduleScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Select Date",
-                      style: CustomTextStyles.f16W600(
-                        color: AppColors.textColor,
-                      ),
-                    ),
-                    Text(
-                      "February 2026",
-                      style: CustomTextStyles.f14W600(
-                        color: AppColors.textColor,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      SizedBox(width: 8),
-
-                      DayDateCard(day: "Sun", date: "22"),
-                      SizedBox(width: 15),
-
-                      DayDateCard(day: "Mon", date: "23"),
-                      SizedBox(width: 15),
-
-                      DayDateCard(day: "Tue", date: "24"),
-                      SizedBox(width: 15),
-
-                      DayDateCard(day: "Wed", date: "25"),
-                      SizedBox(width: 15),
-
-                      DayDateCard(day: "Thu", date: "26"),
-                      SizedBox(width: 15),
-
-                      DayDateCard(day: "Fri", date: "27"),
-                      SizedBox(width: 15),
-
-                      DayDateCard(day: "Sat", date: "28"),
-                      SizedBox(width: 8),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
                 Text(
                   "Available Slots",
                   style: CustomTextStyles.f16W600(color: AppColors.textColor),
                 ),
                 SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          TimeSlotCard(time: "09:30 AM"),
-                          SizedBox(height: 20),
 
-                          TimeSlotCard(time: "12:00 PM"),
-                          SizedBox(height: 20),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: room.availabilitySlots?.length ?? 0,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 3,
+                  ),
+                  itemBuilder: (context, index) {
+                    final slot = room.availabilitySlots![index];
 
-                          TimeSlotCard(time: "02:30 PM"),
-                        ],
+                    return Obx(
+                      () => TimeSlotCard(
+                        availabilitySlots: slot,
+                        isSelected:
+                            controller.selectedTime.value == slot.startTime,
+                        onTap: slot.isBooked == true
+                            ? () {}
+                            : () {
+                                controller.selectTime(
+                                  time: slot.startTime ?? "",
+                                  slotId: slot.id ?? "",
+                                  date: DateTime.parse(
+                                    slot.availableDate ?? "",
+                                  ),
+                                );
+                              },
                       ),
-                    ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          TimeSlotCard(time: "11:00 AM"),
-                          SizedBox(height: 20),
-
-                          TimeSlotCard(time: "01:30 PM"),
-                          SizedBox(height: 20),
-
-                          TimeSlotCard(time: "04:00 PM"),
-                        ],
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -182,6 +154,7 @@ class RoomScheduleScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  controller: controller.notesController,
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.newline,
                   maxLines: null,
@@ -200,7 +173,7 @@ class RoomScheduleScreen extends StatelessWidget {
                 SizedBox(height: 40),
                 InkWell(
                   onTap: () {
-                    Get.to(() => RoomAppointmentScreen());
+                    controller.bookRoom(roomId: room.id.toString(), room: room);
                   },
                   child: Container(
                     height: 50,
@@ -210,12 +183,18 @@ class RoomScheduleScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Center(
-                      child: Text(
-                        "Confirm Visit Schedule",
-                        style: CustomTextStyles.f16W600(
-                          color: AppColors.whiteColor,
-                        ),
-                      ),
+                      child: Obx(() {
+                        return controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                "Confirm Visit Schedule",
+                                style: CustomTextStyles.f16W600(
+                                  color: AppColors.whiteColor,
+                                ),
+                              );
+                      }),
                     ),
                   ),
                 ),

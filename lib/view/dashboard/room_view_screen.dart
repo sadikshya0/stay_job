@@ -28,7 +28,7 @@ class RoomViewScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      room.image,
+                      room.image ?? "",
                       height: 270,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -85,7 +85,7 @@ class RoomViewScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      room.title,
+                      room.title ?? "",
                       style: CustomTextStyles.f20W600(
                         color: AppColors.textColor,
                       ),
@@ -111,7 +111,7 @@ class RoomViewScreen extends StatelessWidget {
 
                       SizedBox(width: 5),
                       Text(
-                        room.location,
+                        room.location ?? "",
                         style: CustomTextStyles.f14W600(
                           color: AppColors.textColor,
                         ),
@@ -159,20 +159,26 @@ class RoomViewScreen extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           backgroundColor: AppColors.lGrey,
-                          child: Text("J"),
+                          child: ClipOval(
+                            child: Image.network(
+                              room.vendor?.profileImage ?? "",
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
                         ),
                         SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "John Doe",
+                              room.vendor?.name ?? "",
                               style: CustomTextStyles.f12W600(
                                 color: AppColors.whiteColor,
                               ),
                             ),
                             Text(
-                              "Property owner",
+                              room.vendor?.vendorType ?? "",
                               style: CustomTextStyles.f12W400(
                                 color: AppColors.secondaryTextColor,
                               ),
@@ -235,7 +241,7 @@ class RoomViewScreen extends StatelessWidget {
               SizedBox(height: 10),
 
               Text(
-                room.description,
+                room.description ?? "",
                 textAlign: TextAlign.justify,
                 style: CustomTextStyles.f12W400(color: AppColors.textColor),
               ),
@@ -251,10 +257,10 @@ class RoomViewScreen extends StatelessWidget {
 
               // ROOM CARD FIXED
               RoomCard(
-                image: room.image,
-                title: room.title,
+                image: room.image ?? "",
+                title: room.title ?? "",
                 price: "Rs. ${room.rentAmount}",
-                location: room.location,
+                location: room.location ?? "",
                 isBookAvailable: false,
               ),
             ],
@@ -265,7 +271,7 @@ class RoomViewScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
         child: InkWell(
-          onTap: () => Get.to(() => RoomScheduleScreen()),
+          onTap: () => Get.to(() => RoomScheduleScreen(room: room)),
           child: Container(
             height: 50,
             decoration: BoxDecoration(

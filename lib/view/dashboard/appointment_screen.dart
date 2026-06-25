@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:safe_job/controller/dashboard/appointment_controller.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
-import 'package:safe_job/utils/image_path.dart';
 import 'package:safe_job/widgets/profile_widgets/visit_card.dart';
 
 class AppointmentScreen extends StatelessWidget {
   AppointmentScreen({super.key});
 
+  final AppointmentController controller = Get.put(AppointmentController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         leading: InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: Icon(Icons.arrow_back, color: AppColors.textColor, size: 22),
+          onTap: () => Get.back(),
+          child: Icon(Icons.arrow_back, color: AppColors.textColor),
         ),
         title: Text(
           "Appointment",
@@ -28,56 +27,27 @@ class AppointmentScreen extends StatelessWidget {
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
-      body: SafeArea(
-        child: Padding(
+
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.bookings.isEmpty) {
+          return const Center(child: Text("No appointments found"));
+        }
+
+        return ListView.separated(
           padding: const EdgeInsets.all(16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                VisitCard(
-                  image: ImagePath.bedroom,
-                  title: "Modern 2BHK Flat",
-                  date: "March 15, 2026",
-                  time: "12:00 PM",
-                  status: "Pending",
-                ),
-                SizedBox(height: 20),
-                VisitCard(
-                  image: ImagePath.bedroom,
-                  title: "Single Room",
-                  date: "March 15, 2026",
-                  time: "12:00 PM",
-                  status: "Pending",
-                ),
-                SizedBox(height: 20),
-                VisitCard(
-                  image: ImagePath.bedroom,
-                  title: "Modern 2BHK Flat",
-                  date: "March 15, 2026",
-                  time: "12:00 PM",
-                  status: "Rejected",
-                ),
-                SizedBox(height: 20),
-                VisitCard(
-                  image: ImagePath.bedroom,
-                  title: "Modern 2BHK Flat",
-                  date: "March 15, 2026",
-                  time: "12:00 PM",
-                  status: "confirmed",
-                ),
-                SizedBox(height: 20),
-                VisitCard(
-                  image: ImagePath.bedroom,
-                  title: "Modern 2BHK Flat",
-                  date: "March 15, 2026",
-                  time: "12:00 PM",
-                  status: "Pending",
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+          itemCount: controller.bookings.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 20),
+          itemBuilder: (context, index) {
+            final item = controller.bookings[index];
+
+            return VisitCard(book: item);
+          },
+        );
+      }),
     );
   }
 }
