@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:safe_job/model/room.dart';
 import 'package:safe_job/repo/get_room_repo.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 
 class RoomViewScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -12,13 +13,13 @@ class RoomViewScreenController extends GetxController {
     await GetRoomRepo.roomRepo(
       onSuccess: (rooms) {
         if (rooms.isNotEmpty) {
-          room.value = rooms.first; // or find by id later
+          room.value = rooms.first;
         }
         isLoading.value = false;
       },
       onError: (msg) {
         isLoading.value = false;
-        Get.snackbar("Error", msg);
+        CustomSnackBar.success(message: msg);
       },
     );
   }

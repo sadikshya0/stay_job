@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:safe_job/model/room.dart';
 import 'package:safe_job/repo/get_room_repo.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 
 class RoomScreenController extends GetxController {
   var selectedIndex = 0.obs;
@@ -27,7 +28,7 @@ class RoomScreenController extends GetxController {
           roomList.assignAll(rooms);
         },
         onError: (message) {
-          Get.snackbar("Error", message);
+          CustomSnackBar.error(message: message);
         },
       );
     } finally {

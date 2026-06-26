@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:safe_job/repo/apply_job_repo.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 import 'package:safe_job/view/dashboard/dash_screen.dart';
 
 class ApplicationScreenController extends GetxController {
@@ -36,13 +37,12 @@ class ApplicationScreenController extends GetxController {
       onSuccess: (message) {
         isLoading.value = false;
         isApplied.value = true;
-
-        Get.snackbar("Success", message);
+        CustomSnackBar.success(title: "Job", message: message);
         Get.offAll(() => DashScreen());
       },
       onError: (message) {
         isLoading.value = false;
-        Get.snackbar("Error", message);
+        CustomSnackBar.error(title: "Job", message: message);
       },
     );
   }

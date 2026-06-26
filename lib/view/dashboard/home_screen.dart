@@ -287,15 +287,10 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.textColor,
                       ),
                     ),
-                    InkWell(
-                      // onTap: () {
-                      //   Get.offAll(() => JobScreen());
-                      // },
-                      child: Text(
-                        "See All",
-                        style: CustomTextStyles.f14W600(
-                          color: AppColors.textColor,
-                        ),
+                    Text(
+                      "See All",
+                      style: CustomTextStyles.f14W600(
+                        color: AppColors.textColor,
                       ),
                     ),
                   ],
@@ -332,12 +327,10 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.textColor,
                       ),
                     ),
-                    InkWell(
-                      child: Text(
-                        "See All",
-                        style: CustomTextStyles.f14W600(
-                          color: AppColors.textColor,
-                        ),
+                    Text(
+                      "See All",
+                      style: CustomTextStyles.f14W600(
+                        color: AppColors.textColor,
                       ),
                     ),
                   ],

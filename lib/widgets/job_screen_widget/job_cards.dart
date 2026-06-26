@@ -40,7 +40,7 @@ class JobCards extends StatelessWidget {
             spreadRadius: 4,
             blurRadius: 3,
             color: AppColors.lGrey,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -52,7 +52,7 @@ class JobCards extends StatelessWidget {
             Row(
               children: [
                 Image.asset(image, height: 60, width: 60),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
 
                 Expanded(
                   child: Column(
@@ -87,9 +87,8 @@ class JobCards extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
 
-            // TAGS
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -146,9 +145,7 @@ class JobCards extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 15),
-
-            // BOTTOM INFO
+            SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

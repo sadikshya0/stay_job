@@ -1,18 +1,16 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 
 class EditProfileController extends GetxController {
-  /// Selected Image
   Rx<File?> selectedImage = Rx<File?>(null);
   RxString selectedGender = "".obs;
 
   RxString selectedDOB = "".obs;
 
-  /// Image Picker Instance
   final ImagePicker _picker = ImagePicker();
 
-  /// Pick from Camera
   Future<void> pickFromCamera() async {
     try {
       final XFile? image = await _picker.pickImage(
@@ -24,11 +22,10 @@ class EditProfileController extends GetxController {
         selectedImage.value = File(image.path);
       }
     } catch (e) {
-      Get.snackbar("Error", "Failed to pick image from camera");
+      CustomSnackBar.error(message: "Failed to pick image from camera");
     }
   }
 
-  /// Pick from Gallery
   Future<void> pickFromGallery() async {
     try {
       final XFile? image = await _picker.pickImage(
@@ -40,7 +37,7 @@ class EditProfileController extends GetxController {
         selectedImage.value = File(image.path);
       }
     } catch (e) {
-      Get.snackbar("Error", "Failed to pick image from gallery");
+      CustomSnackBar.error(message: "Failed to pick image from gallery");
     }
   }
 }

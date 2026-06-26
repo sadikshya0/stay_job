@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:safe_job/repo/get_jobs_repo.dart';
 import 'package:safe_job/model/job.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 
 class JobScreenController extends GetxController {
   var selectedIndex = 0.obs;
@@ -26,7 +27,7 @@ class JobScreenController extends GetxController {
           jobList.assignAll(job);
         },
         onError: (message) {
-          Get.snackbar("Error", message);
+          CustomSnackBar.error(message: message);
         },
       );
     } finally {

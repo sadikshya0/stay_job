@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:safe_job/model/book.dart';
 import 'package:safe_job/repo/get_bookings_repo.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 
 class AppointmentController extends GetxController {
   RxBool isLoading = false.obs;
@@ -22,7 +23,7 @@ class AppointmentController extends GetxController {
       },
       onError: (message) {
         isLoading.value = false;
-        Get.snackbar("Error", message);
+        CustomSnackBar.error(message: message);
       },
     );
   }

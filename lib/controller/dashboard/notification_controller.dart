@@ -5,6 +5,7 @@ import 'package:safe_job/repo/delete_notification_repo.dart';
 import 'package:safe_job/repo/get_notification_repo.dart';
 import 'package:safe_job/repo/mark_all_notification_repo.dart';
 import 'package:safe_job/repo/mark_notification_repo.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 
 class NotificationController extends GetxController {
   @override
@@ -43,7 +44,7 @@ class NotificationController extends GetxController {
       },
       onError: (msg) {
         isLoading.value = false;
-        Get.snackbar("Error", msg);
+        CustomSnackBar.error(message: msg);
       },
     );
   }
@@ -55,7 +56,7 @@ class NotificationController extends GetxController {
         fetchNotification(); // refresh
       },
       onError: (msg) {
-        Get.snackbar("Error", msg);
+        CustomSnackBar.error(message: msg);
       },
     );
   }
@@ -63,12 +64,12 @@ class NotificationController extends GetxController {
   Future<void> markAllAsRead() async {
     await MarkAllNotificationsRepo.markAllNotificationRepo(
       onSuccess: (message) {
-        Get.snackbar("Success", message);
+        CustomSnackBar.success(message: message);
 
         fetchNotification();
       },
       onError: (msg) {
-        Get.snackbar("Error", msg);
+        CustomSnackBar.error(message: msg);
       },
     );
   }
@@ -77,12 +78,12 @@ class NotificationController extends GetxController {
     await DeleteNotificationRepo.deleteNotificationRepo(
       notification_id: id,
       onSuccess: (message) {
-        Get.snackbar("Success", message);
+        CustomSnackBar.success(message: message);
 
         notifications.removeWhere((n) => n.id.toString() == id);
       },
       onError: (msg) {
-        Get.snackbar("Error", msg);
+        CustomSnackBar.error(message: msg);
       },
     );
   }
@@ -90,12 +91,12 @@ class NotificationController extends GetxController {
   Future<void> deleteAllNotifications() async {
     await DeleteAllNotificationRepo.deleteAllNotificationRepo(
       onSuccess: (message) {
-        Get.snackbar("Success", message);
+        CustomSnackBar.success(message: message);
 
         fetchNotification();
       },
       onError: (msg) {
-        Get.snackbar("Error", msg);
+        CustomSnackBar.error(message: msg);
       },
     );
   }

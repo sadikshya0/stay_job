@@ -17,13 +17,12 @@ class JobScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
 
-      // APP BAR
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         toolbarHeight: 110,
         elevation: 2,
         shadowColor: AppColors.lGrey,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
         ),
         title: Column(
@@ -32,28 +31,29 @@ class JobScreen extends StatelessWidget {
               "Find Your Career",
               style: CustomTextStyles.f18W600(color: AppColors.primaryColor),
             ),
-            const SizedBox(height: 15),
+            SizedBox(height: 15),
 
-            // FILTER ROW
-            Row(
-              children: [
-                buildFilterButton("All", 0, 55),
-                buildFilterButton("full_time", 1, 70),
-                buildFilterButton("part_time", 2, 85),
-                buildFilterButton("Contract", 3, 70),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  buildFilterButton("All", 0, 55),
+                  buildFilterButton("full_time", 1, 70),
+                  buildFilterButton("part_time", 2, 85),
+                  buildFilterButton("Contract", 3, 70),
+                ],
+              ),
             ),
           ],
         ),
       ),
 
-      // BODY
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Obx(() {
             if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             }
 
             final index = controller.selectedIndex.value;
@@ -76,7 +76,7 @@ class JobScreen extends StatelessWidget {
             }).toList();
 
             if (filtered.isEmpty) {
-              return const Center(child: Text("No rooms available"));
+              return Center(child: Text("No rooms available"));
             }
             return ListView.builder(
               itemCount: filtered.length,
@@ -90,7 +90,7 @@ class JobScreen extends StatelessWidget {
                     title: job.title ?? "",
                     company: job.companyName ?? "",
                     jobType: job.jobType ?? "",
-                    salary: job.salaryMin ?? "",
+                    salary: "NPR ${job.salaryMin}- ${job.salaryMax}",
                     location: job.location ?? "",
                     onSeemoreTap: () {
                       Get.to(() => JobDetailScreen(job: job));

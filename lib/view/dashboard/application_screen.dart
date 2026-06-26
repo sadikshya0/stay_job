@@ -33,32 +33,27 @@ class ApplicationScreen extends StatelessWidget {
             child: Column(
               children: [
                 Center(
-                  child: Container(
-                    height: 140,
-                    width: 160,
-                    decoration: BoxDecoration(color: AppColors.whiteColor),
-                    child: Column(
-                      children: [
-                        Image.asset(ImagePath.job, height: 90, width: 160),
-                        Text(
-                          job.title ?? "",
-                          style: CustomTextStyles.f16W600(
-                            color: AppColors.textColor,
-                          ),
+                  child: Column(
+                    children: [
+                      Image.asset(ImagePath.job, height: 100, width: 160),
+                      Text(
+                        job.title ?? "",
+                        style: CustomTextStyles.f16W600(
+                          color: AppColors.textColor,
                         ),
-                        Text(
-                          job.companyName ?? "",
-                          style: CustomTextStyles.f14W400(
-                            color: AppColors.textColor,
-                          ),
+                      ),
+                      Text(
+                        job.companyName ?? "",
+                        style: CustomTextStyles.f14W400(
+                          color: AppColors.textColor,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 40),
                 Container(
-                  height: 400,
+                  height: 220,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.lGrey),
@@ -67,6 +62,7 @@ class ApplicationScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Upload Resume",

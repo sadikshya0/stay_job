@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_job/model/room.dart';
 import 'package:safe_job/repo/book_room_repo.dart';
+import 'package:safe_job/utils/custom_snackbar.dart';
 import 'package:safe_job/view/dashboard/room_appointment_screen.dart';
 
 class RoomScheduleController extends GetxController {
@@ -43,7 +44,7 @@ class RoomScheduleController extends GetxController {
       onSuccess: (message) {
         isLoading.value = false;
 
-        Get.snackbar("Success", message);
+        CustomSnackBar.success(message: message);
 
         Get.to(
           () => RoomAppointmentScreen(),
@@ -56,7 +57,7 @@ class RoomScheduleController extends GetxController {
       },
       onError: (message) {
         isLoading.value = false;
-        Get.snackbar("Error", message);
+        CustomSnackBar.error(message: message);
       },
     );
   }
