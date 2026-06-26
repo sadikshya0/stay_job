@@ -15,4 +15,6 @@ class Api {
       "$baseUrl/delete_notification.php";
   static const String deleteAllNotificationUrl =
       "$baseUrl/delete_all_notification.php";
+  static const String getJobsUrl = "$baseUrl/get_jobs.php";
+  static const String applyJobUrl = "$baseUrl/apply_job.php";
 }

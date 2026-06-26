@@ -45,6 +45,7 @@ class Info extends StatelessWidget {
             ),
             Text(
               description,
+              textAlign: TextAlign.left,
               style: CustomTextStyles.f14W600(color: AppColors.textColor),
             ),
           ],

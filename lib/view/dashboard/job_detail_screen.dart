@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/utils.dart';
+import 'package:safe_job/model/job.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
@@ -8,7 +10,8 @@ import 'package:safe_job/view/dashboard/application_screen.dart';
 import 'package:safe_job/widgets/job_screen_widget/info.dart';
 
 class JobDetailScreen extends StatelessWidget {
-  const JobDetailScreen({super.key});
+  final Job job;
+  JobDetailScreen({super.key, required this.job});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +52,7 @@ class JobDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Fresh Elements Restaurant and Bar",
+                            job.title ?? "",
                             style: CustomTextStyles.f16W400(
                               color: AppColors.secondaryTextColor,
                             ),
@@ -58,7 +61,7 @@ class JobDetailScreen extends StatelessWidget {
                           const SizedBox(height: 10),
 
                           Text(
-                            "Waiter",
+                            job.companyName ?? "",
                             style: CustomTextStyles.f18W600(
                               color: AppColors.textColor,
                             ),
@@ -82,36 +85,9 @@ class JobDetailScreen extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "FULL TIME",
+                                    job.jobType ?? "",
                                     style: CustomTextStyles.f12W600(
                                       color: AppColors.primaryColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              const SizedBox(width: 10),
-
-                              Flexible(
-                                child: Container(
-                                  height: 25,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.whiteColor,
-                                    border: Border.all(
-                                      color: AppColors.secondaryTextColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "REMOTE WORKING",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: CustomTextStyles.f12W600(
-                                        color: AppColors.primaryColor,
-                                      ),
                                     ),
                                   ),
                                 ),
@@ -136,41 +112,32 @@ class JobDetailScreen extends StatelessWidget {
                 SizedBox(height: 10),
                 Divider(color: AppColors.secondaryTextColor),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Info(
-                          description: "12K-18K/ month",
-                          title: "Salary",
-                          icon: Icons.monetization_on,
-                        ),
-                        SizedBox(height: 10),
-                        Info(
-                          description: "Lakeside, Pokhara",
-                          title: "Location",
-                          icon: Icons.location_on,
-                        ),
-                      ],
+                    Info(
+                      description: "${job.salaryMin} - ${job.salaryMax}",
+                      title: "Salary",
+                      icon: Icons.monetization_on,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Info(
-                          description: "March 3, 2026",
-                          title: "Expiry Date",
-                          icon: Icons.calendar_month,
-                        ),
-                        SizedBox(height: 10),
+                    SizedBox(height: 10),
+                    Info(
+                      description: job.location ?? "",
+                      title: "Location",
+                      icon: Icons.location_on,
+                    ),
+                    SizedBox(height: 10),
 
-                        Info(
-                          description: "4",
-                          title: "Applicants",
-                          icon: Icons.people_alt_outlined,
-                        ),
-                      ],
+                    Info(
+                      description: job.createdAt ?? "",
+                      title: "Assigned Date",
+                      icon: Icons.calendar_month,
+                    ),
+                    SizedBox(height: 10),
+
+                    Info(
+                      description: job.experienceRequired ?? "",
+                      title: "Experience Required",
+                      icon: Icons.people_alt_outlined,
                     ),
                   ],
                 ),
@@ -184,26 +151,11 @@ class JobDetailScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Responsible and are not limited to, assisting and welcoming guests, taking orders, and serving meals, clearing tables then setting them up for new arrivals.",
+                  job.description ?? "",
                   style: CustomTextStyles.f14W400(color: AppColors.textColor),
                   textAlign: TextAlign.left,
                 ),
-                FeatureRow(text: "Architecto beatae vitae dicta "),
                 SizedBox(height: 10),
-
-                FeatureRow(text: "Doloremque laudantium"),
-                SizedBox(height: 10),
-
-                FeatureRow(text: "Ipsa quae ab illo inventore"),
-                SizedBox(height: 10),
-
-                FeatureRow(text: "Architecto beatae vitae dicta"),
-                SizedBox(height: 10),
-
-                FeatureRow(text: "Sunt explicabo"),
-                SizedBox(height: 30),
-                Divider(color: AppColors.secondaryTextColor),
-                SizedBox(height: 5),
                 Text(
                   "For more inquiry",
                   style: CustomTextStyles.f16W600(color: AppColors.textColor),
@@ -237,7 +189,7 @@ class JobDetailScreen extends StatelessWidget {
                 SizedBox(height: 30),
                 InkWell(
                   onTap: () {
-                    Get.to(() => ApplicationScreen());
+                    Get.to(() => ApplicationScreen(job: job));
                   },
                   child: Container(
                     height: 50,

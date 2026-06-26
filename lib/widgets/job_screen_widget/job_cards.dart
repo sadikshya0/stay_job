@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
-import 'package:safe_job/view/dashboard/job_detail_screen.dart';
 
 class JobCards extends StatelessWidget {
   final String image;
@@ -11,6 +9,8 @@ class JobCards extends StatelessWidget {
   final String jobType;
   final String salary;
   final String location;
+  final VoidCallback? onSeemoreTap;
+  final VoidCallback? onBookmarkTap;
 
   const JobCards({
     super.key,
@@ -20,6 +20,8 @@ class JobCards extends StatelessWidget {
     required this.jobType,
     required this.salary,
     required this.location,
+    this.onSeemoreTap,
+    this.onBookmarkTap,
   });
 
   @override
@@ -66,7 +68,10 @@ class JobCards extends StatelessWidget {
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
-                          Icon(Icons.bookmark_border, size: 18),
+                          InkWell(
+                            onTap: onBookmarkTap,
+                            child: Icon(Icons.bookmark_border, size: 18),
+                          ),
                         ],
                       ),
                       Text(
@@ -88,14 +93,15 @@ class JobCards extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: 25,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
+                Expanded(
+                  child: Container(
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.location_on,
@@ -112,28 +118,29 @@ class JobCards extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(width: 15),
                 Container(
                   height: 25,
+                  width: 100,
                   decoration: BoxDecoration(
                     color: Colors.amber.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.access_time_sharp,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.access_time_sharp,
+                        color: AppColors.orange,
+                        size: 16,
+                      ),
+                      Text(
+                        jobType,
+                        style: CustomTextStyles.f14W600(
                           color: AppColors.orange,
-                          size: 16,
                         ),
-                        Text(
-                          jobType,
-                          style: CustomTextStyles.f14W600(
-                            color: AppColors.orange,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -152,12 +159,10 @@ class JobCards extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    Get.to(() => JobDetailScreen());
-                  },
+                  onTap: onSeemoreTap,
                   child: Container(
                     height: 25,
-                    width: 75,
+                    width: 80,
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(8),

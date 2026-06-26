@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:safe_job/controller/dashboard/job_screen_controller.dart';
 import 'package:safe_job/controller/dashboard/notification_controller.dart';
+import 'package:safe_job/controller/dashboard/room_screen_controller.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
@@ -13,7 +15,9 @@ import 'package:safe_job/widgets/home_screen_widget/flat_card.dart';
 import 'package:safe_job/widgets/home_screen_widget/job_card.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final JobScreenController controller = Get.put(JobScreenController());
+  final RoomScreenController c = Get.put(RoomScreenController());
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +85,14 @@ class HomeScreen extends StatelessWidget {
                             top: -2,
                             child: Container(
                               padding: const EdgeInsets.all(4),
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 color: Colors.red,
                                 shape: BoxShape.circle,
                               ),
                               child: Text(
                                 controller.unreadCount.toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
+                                style: CustomTextStyles.f10W600(
+                                  color: AppColors.whiteColor,
                                 ),
                               ),
                             ),
@@ -168,7 +171,6 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: Stack(
                       children: [
-                        // TOP RIGHT SVG
                         Positioned(
                           top: -1,
                           right: -2,
@@ -197,46 +199,80 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
 
-                        // MAIN CONTENT
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "New job near your saved room!",
-                              style: CustomTextStyles.f14W600(
-                                color: AppColors.whiteColor,
-                              ),
-                            ),
-
-                            const SizedBox(height: 5),
-
-                            Text(
-                              "UI/UX designer role at Random Tech is just 1 km         away from your place.",
-                              style: CustomTextStyles.f14W400(
-                                color: AppColors.secondaryTextColor,
-                              ),
-                            ),
-
-                            const SizedBox(height: 15),
-
-                            Container(
-                              height: 30,
-                              width: 90,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: AppColors.whiteColor),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "View Match",
-                                  style: CustomTextStyles.f12W600(
+                        Obx(() {
+                          if (controller.jobList.isEmpty) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "No jobs available",
+                                  style: CustomTextStyles.f14W600(
                                     color: AppColors.whiteColor,
                                   ),
                                 ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "Check back later for new opportunities.",
+                                  style: CustomTextStyles.f14W400(
+                                    color: AppColors.secondaryTextColor,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+
+                          final job = controller.jobList.first;
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${job.title} at ${job.companyName}",
+                                style: CustomTextStyles.f14W600(
+                                  color: AppColors.whiteColor,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+
+                              SizedBox(height: 5),
+
+                              Text(
+                                "${job.location} ",
+                                style: CustomTextStyles.f14W400(
+                                  color: AppColors.secondaryTextColor,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+
+                              Text(
+                                " NPR ${job.salaryMin}-${job.salaryMax}",
+                                style: CustomTextStyles.f14W400(
+                                  color: AppColors.secondaryTextColor,
+                                ),
+                              ),
+
+                              SizedBox(height: 15),
+
+                              Container(
+                                height: 30,
+                                width: 90,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "View Match",
+                                    style: CustomTextStyles.f12W600(
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -265,42 +301,27 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      JobCard(
-                        image: ImagePath.job,
-                        title: "Senior Backend..",
-                        company: "TechFlow Solution",
-                        jobType: "FULL TIME",
-                        experience: "+3 YEARS",
-                        salary: "NPR 70k - 90k",
-                        location: "0 km, Pokhara",
-                      ),
-                      SizedBox(width: 20),
-                      JobCard(
-                        image: ImagePath.job,
-                        title: "Content Creator",
-                        company: "ABC Solution",
-                        jobType: "FULL TIME",
-                        experience: "+2 YEARS",
-                        salary: "NPR 15k - 25k",
-                        location: "Srijanachowk, Pokhara",
-                      ),
-                      SizedBox(width: 20),
-                      JobCard(
-                        image: ImagePath.job,
-                        title: "UI/UX Designer",
-                        company: "XYZ Studio",
-                        jobType: "FULL TIME",
-                        experience: "+2 YEARS",
-                        salary: "NPR 20k - 30k",
-                        location: "Ratnachowk, Pokhara",
-                      ),
-                    ],
-                  ),
-                ),
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  if (controller.jobList.isEmpty) {
+                    return Center(child: Text("No jobs found"));
+                  }
+
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: controller.jobList.map((job) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: JobCard(image: ImagePath.job, job: job),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }),
                 SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,31 +343,25 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
-                FlatCard(
-                  image: ImagePath.job,
-                  title: "Flat",
-                  location: "Lamachaur, Pokhara",
-                  price: "NPR 15000",
-                  rating: "4.5",
-                ),
-                SizedBox(height: 20),
-                FlatCard(
-                  image: ImagePath.job,
-                  title: "Single Room",
-                  location: "Bagar, Pokhara",
-                  price: "NPR 5000",
-                  rating: "4.5",
-                ),
-                SizedBox(height: 20),
 
-                FlatCard(
-                  image: ImagePath.job,
-                  title: "Flat",
-                  location: "0km, Pokhara",
-                  price: "NPR 5000",
-                  rating: "4.5",
-                ),
-                SizedBox(height: 20),
+                Obx(() {
+                  if (c.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  if (c.roomList.isEmpty) {
+                    return Center(child: Text("No jobs found"));
+                  }
+
+                  return Column(
+                    children: c.roomList.map((room) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: FlatCard(room: room),
+                      );
+                    }).toList(),
+                  );
+                }),
               ],
             ),
           ),

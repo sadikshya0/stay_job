@@ -4,6 +4,7 @@ import 'package:safe_job/controller/dashboard/job_screen_controller.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
+import 'package:safe_job/view/dashboard/job_detail_screen.dart';
 import 'package:safe_job/widgets/job_screen_widget/job_cards.dart';
 
 class JobScreen extends StatelessWidget {
@@ -37,9 +38,9 @@ class JobScreen extends StatelessWidget {
             Row(
               children: [
                 buildFilterButton("All", 0, 55),
-                buildFilterButton("Waiter", 1, 70),
-                buildFilterButton("Developer", 2, 85),
-                buildFilterButton("Driver", 3, 70),
+                buildFilterButton("full_time", 1, 70),
+                buildFilterButton("part_time", 2, 85),
+                buildFilterButton("Contract", 3, 70),
               ],
             ),
           ],
@@ -51,19 +52,32 @@ class JobScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
             final index = controller.selectedIndex.value;
 
-            final filtered = controller.job.where((job) {
-              final title = job["title"].toString();
+            final filtered = controller.jobList.where((job) {
+              final type = job.jobType;
 
-              if (index == 0) return true;
-              if (index == 1) return title.contains("Waiter");
-              if (index == 2) return title.contains("Developer");
-              if (index == 3) return title.contains("Driver");
-
-              return true;
+              switch (index) {
+                case 0:
+                  return true;
+                case 1:
+                  return type == "full_time";
+                case 2:
+                  return type == "part_time";
+                case 3:
+                  return type == "Contract";
+                default:
+                  return true;
+              }
             }).toList();
 
+            if (filtered.isEmpty) {
+              return const Center(child: Text("No rooms available"));
+            }
             return ListView.builder(
               itemCount: filtered.length,
               itemBuilder: (context, i) {
@@ -73,11 +87,15 @@ class JobScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: JobCards(
                     image: ImagePath.job,
-                    title: job["title"],
-                    company: job["company"],
-                    jobType: job["type"],
-                    salary: job["salary"],
-                    location: job["location"],
+                    title: job.title ?? "",
+                    company: job.companyName ?? "",
+                    jobType: job.jobType ?? "",
+                    salary: job.salaryMin ?? "",
+                    location: job.location ?? "",
+                    onSeemoreTap: () {
+                      Get.to(() => JobDetailScreen(job: job));
+                    },
+                    onBookmarkTap: () {},
                   ),
                 );
               },

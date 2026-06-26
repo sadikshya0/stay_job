@@ -1,33 +1,36 @@
 import 'package:get/get.dart';
+import 'package:safe_job/repo/get_jobs_repo.dart';
+import 'package:safe_job/model/job.dart';
 
 class JobScreenController extends GetxController {
   var selectedIndex = 0.obs;
+  var isLoading = false.obs;
 
   void changeIndex(int index) {
     selectedIndex.value = index;
   }
 
-  final List<Map<String, dynamic>> job = [
-    {
-      "title": "Senior Backend Developer",
-      "company": "TechFlow Solution",
-      "type": "FULL TIME",
-      "salary": "NPR 70k - 90k",
-      "location": "0km, Pokhara",
-    },
-    {
-      "title": "Waiter",
-      "company": "Fresh Elements Restaurant & Bar",
-      "type": "FULL TIME",
-      "salary": "NPR 10k - 15k",
-      "location": "Lakeside, Pokhara",
-    },
-    {
-      "title": "Frontend Developer",
-      "company": "ABC Solution",
-      "type": "FULL TIME",
-      "salary": "NPR 60k - 85k",
-      "location": "Chipledhunga, Pokhara",
-    },
-  ];
+  RxList<Job> jobList = <Job>[].obs;
+  @override
+  void onInit() {
+    super.onInit();
+    fetchJob();
+  }
+
+  Future<void> fetchJob() async {
+    try {
+      isLoading.value = true;
+
+      await GetJobsRepo.getJobsRepo(
+        onSuccess: (job) {
+          jobList.assignAll(job);
+        },
+        onError: (message) {
+          Get.snackbar("Error", message);
+        },
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

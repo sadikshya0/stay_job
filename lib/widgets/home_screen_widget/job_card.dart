@@ -1,26 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:safe_job/model/job.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 
 class JobCard extends StatelessWidget {
   final String image;
-  final String title;
-  final String company;
-  final String jobType;
-  final String experience;
-  final String salary;
-  final String location;
-
-  const JobCard({
-    super.key,
-    required this.image,
-    required this.title,
-    required this.company,
-    required this.jobType,
-    required this.experience,
-    required this.salary,
-    required this.location,
-  });
+  final Job job;
+  const JobCard({super.key, required this.image, required this.job});
 
   @override
   Widget build(BuildContext context) {
@@ -46,25 +32,24 @@ class JobCard extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            // TOP SECTION
             Row(
               children: [
                 Image.asset(image, height: 45, width: 40),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
 
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        job.title ?? "",
                         style: CustomTextStyles.f14W600(
                           color: AppColors.textColor,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        company,
+                        job.companyName ?? "",
                         style: CustomTextStyles.f14W400(
                           color: AppColors.secondaryTextColor,
                         ),
@@ -76,9 +61,8 @@ class JobCard extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
 
-            // TAGS
             Row(
               children: [
                 Container(
@@ -90,13 +74,13 @@ class JobCard extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      jobType,
+                      job.jobType ?? "",
                       style: CustomTextStyles.f12W600(color: AppColors.orange),
                     ),
                   ),
                 ),
 
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
 
                 Container(
                   height: 20,
@@ -107,7 +91,7 @@ class JobCard extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      experience,
+                      job.experienceRequired ?? "",
                       style: CustomTextStyles.f12W600(
                         color: AppColors.primaryColor,
                       ),
@@ -117,20 +101,19 @@ class JobCard extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 15),
+            SizedBox(height: 15),
 
-            // BOTTOM INFO
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  salary,
+                  "${job.salaryMin}- ${job.salaryMax}",
                   style: CustomTextStyles.f12W600(
                     color: AppColors.primaryColor,
                   ),
                 ),
                 Text(
-                  location,
+                  job.location ?? "",
                   style: CustomTextStyles.f12W400(
                     color: AppColors.secondaryTextColor,
                   ),

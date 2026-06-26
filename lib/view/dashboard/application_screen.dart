@@ -2,16 +2,17 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_job/controller/dashboard/application_screen_controller.dart';
+import 'package:safe_job/model/job.dart';
 import 'package:safe_job/utils/colors.dart';
 import 'package:safe_job/utils/custom_text_styles.dart';
 import 'package:safe_job/utils/image_path.dart';
-import 'package:safe_job/widgets/custom/custom_textfield.dart';
 
 class ApplicationScreen extends StatelessWidget {
+  final Job job;
   final ApplicationScreenController controller = Get.put(
     ApplicationScreenController(),
   );
-  ApplicationScreen({super.key});
+  ApplicationScreen({super.key, required this.job});
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +41,13 @@ class ApplicationScreen extends StatelessWidget {
                       children: [
                         Image.asset(ImagePath.job, height: 90, width: 160),
                         Text(
-                          "Frontend Developer",
+                          job.title ?? "",
                           style: CustomTextStyles.f16W600(
                             color: AppColors.textColor,
                           ),
                         ),
                         Text(
-                          "ABC Solution",
+                          job.companyName ?? "",
                           style: CustomTextStyles.f14W400(
                             color: AppColors.textColor,
                           ),
@@ -68,34 +69,12 @@ class ApplicationScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "Fill Form",
+                          "Upload Resume",
                           style: CustomTextStyles.f16W600(
                             color: AppColors.primaryColor,
                           ),
                         ),
                         SizedBox(height: 30),
-
-                        CustomTextField(
-                          hint: "Name",
-                          textInputAction: TextInputAction.next,
-                          textInputType: TextInputType.name,
-                        ),
-                        SizedBox(height: 20),
-
-                        CustomTextField(
-                          hint: "Email",
-                          textInputAction: TextInputAction.next,
-                          textInputType: TextInputType.emailAddress,
-                        ),
-                        SizedBox(height: 20),
-
-                        CustomTextField(
-                          hint: "Phone Number",
-                          textInputAction: TextInputAction.next,
-                          textInputType: TextInputType.phone,
-                        ),
-                        SizedBox(height: 20),
-
                         GestureDetector(
                           onTap: () {
                             controller.pickFile();
@@ -116,16 +95,16 @@ class ApplicationScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "+ Upload Resume",
-                                      style: CustomTextStyles.f12W600(
-                                        color: AppColors.secondaryTextColor,
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.file_open_outlined,
-                                      color: AppColors.secondaryTextColor,
-                                    ),
+                                    Obx(() {
+                                      return Text(
+                                        controller.fileName.value.isEmpty
+                                            ? "+ Upload Resume"
+                                            : controller.fileName.value,
+                                        style: CustomTextStyles.f12W600(
+                                          color: AppColors.secondaryTextColor,
+                                        ),
+                                      );
+                                    }),
                                   ],
                                 ),
                               ),
@@ -146,23 +125,19 @@ class ApplicationScreen extends StatelessWidget {
                         backgroundColor: controller.isApplied.value
                             ? Colors.green
                             : AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
                       ),
-
-                      onPressed: () {
-                        controller.isApplied.value = true;
-                      },
-
-                      child: Text(
-                        controller.isApplied.value
-                            ? "Applied Successfully"
-                            : "Apply Now",
-                        style: CustomTextStyles.f14W600(
-                          color: AppColors.whiteColor,
-                        ),
-                      ),
+                      onPressed: controller.isLoading.value
+                          ? null
+                          : () {
+                              controller.applyJob(jobId: job.id.toString());
+                            },
+                      child: controller.isLoading.value
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                              controller.isApplied.value
+                                  ? "Applied Successfully"
+                                  : "Apply Now",
+                            ),
                     ),
                   );
                 }),
